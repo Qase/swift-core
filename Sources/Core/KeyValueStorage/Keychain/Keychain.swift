@@ -5,10 +5,10 @@
 //  Created by Martin Troup on 04.09.2021.
 //
 
+import Foundation
 import Overture
 import OvertureOperators
 import Security
-import UIKit
 
 public struct KeychainErrorMessage: Error, CustomDebugStringConvertible {
     public let value: String?
