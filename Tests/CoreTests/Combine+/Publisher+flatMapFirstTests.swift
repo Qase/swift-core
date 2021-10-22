@@ -18,13 +18,14 @@ class Publisher_flatMapFirstTests: XCTestCase {
         cancellables = []
     }
 
-    struct TestError: Error {}
+    struct TestError: Error, Equatable {}
 
     func test_flatMapFirst_single_upstream_single_flatMap() {
         let testScheduler = DispatchQueue.test
 
         var innerPublisherSubscriptionCount = 0
         var innerPublisherCompletionCount = 0
+        var isUpstreamCompleted = false
 
         Just("").setFailureType(to: Never.self)
             .delay(for: 1, scheduler: testScheduler)
@@ -37,19 +38,28 @@ class Publisher_flatMapFirstTests: XCTestCase {
                     )
                     .eraseToAnyPublisher()
             }
-            .sink(receiveValue: { _ in })
+            .sink(
+                receiveCompletion: { completion in
+                    if case .finished = completion {
+                        isUpstreamCompleted = true
+                    }
+                },
+                receiveValue: { _ in }
+            )
             .store(in: &cancellables)
 
         testScheduler.advance(by: 2)
 
         XCTAssertEqual(innerPublisherSubscriptionCount, 1)
         XCTAssertEqual(innerPublisherCompletionCount, 1)
+        XCTAssertTrue(isUpstreamCompleted)
     }
 
     func test_flatMapFirst_error_upstream_skipping_flatMap() {
         let testScheduler = DispatchQueue.test
 
         var innerPublisherSubscriptionCount = 0
+        var isUpstreamCompleted = false
 
         Fail(error: TestError()).eraseToAnyPublisher()
             .delay(for: 1, scheduler: testScheduler)
@@ -58,12 +68,21 @@ class Publisher_flatMapFirstTests: XCTestCase {
                     .handleEvents(receiveSubscription: { _ in innerPublisherSubscriptionCount += 1 })
                     .eraseToAnyPublisher()
             }
-            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+            .sink(
+                receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        XCTAssertEqual(error, TestError())
+                        isUpstreamCompleted = true
+                    }
+                },
+                receiveValue: { _ in }
+            )
             .store(in: &cancellables)
 
         testScheduler.advance(by: 1)
 
         XCTAssertEqual(innerPublisherSubscriptionCount, 0)
+        XCTAssertTrue(isUpstreamCompleted)
     }
 
     func test_flatmap_first() {
@@ -71,6 +90,7 @@ class Publisher_flatMapFirstTests: XCTestCase {
 
         var innerPublisherSubscriptionCount = 0
         var innerPublisherCompletionCount = 0
+        var isUpstreamCompleted = false
 
         testScheduler.timerPublisher(every: 1)
             .autoconnect()
@@ -84,13 +104,21 @@ class Publisher_flatMapFirstTests: XCTestCase {
                     .delay(for: 10, scheduler: testScheduler)
                     .eraseToAnyPublisher()
             }
-            .sink(receiveValue: { _ in })
+            .sink(
+                receiveCompletion: { completion in
+                    if case .finished = completion {
+                        isUpstreamCompleted = true
+                    }
+                },
+                receiveValue: { _ in }
+            )
             .store(in: &cancellables)
 
 
-        testScheduler.advance(by: 100)
+        testScheduler.advance(by: 110)
 
         XCTAssertEqual(innerPublisherSubscriptionCount, 10)
         XCTAssertEqual(innerPublisherCompletionCount, 10)
+        XCTAssertTrue(isUpstreamCompleted)
     }
 }
