@@ -28,8 +28,7 @@ extension UserDefaults: KeyValueStorageType {
         do {
             let encoded: Data = try jsonEncoder.encode(object)
 
-            set(encoded, forKey: key)
-            synchronize()
+            store(value: encoded, forKey: key)
 
             return .success(())
         } catch let error {
