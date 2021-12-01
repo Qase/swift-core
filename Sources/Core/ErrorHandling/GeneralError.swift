@@ -41,7 +41,7 @@ public struct GeneralError: ErrorReportable {
     }
 }
 
-// MARK: - NetworkError instances
+// MARK: - GeneralError instances
 
 public extension GeneralError {
     static var nilSelf: Self {
