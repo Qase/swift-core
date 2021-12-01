@@ -12,12 +12,8 @@ extension UserDefaults: KeyValueStorageType {
         guard let data: Data = data(forKey: key) else {
             return .failure(.noData)
         }
-
-        do {
-            return try .success(jsonDecoder.decode(Object.self, from: data))
-        } catch let error {
-            return .failure(.loadError(error))
-        }
+        
+        return .execute( { try jsonDecoder.decode(Object.self, from: data) } , onThrows: KeyValueStorageError.loadError)
     }
 
     public func store<Object: Encodable>(
