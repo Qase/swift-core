@@ -83,6 +83,7 @@ public class Keychain {
 
     private func update(_ data: Data, forKey key: String) -> Result<Void, KeyValueStorageError> {
         let updateQuery = KeychainQuery(initialQuery: baseQuery) {
+            KeychainQueryComponent.key(key, prefix: self.keyPrefix)
             KeychainQueryComponent.value(data)
         }
 

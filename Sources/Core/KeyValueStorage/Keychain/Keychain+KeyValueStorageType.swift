@@ -15,11 +15,7 @@ extension Keychain: KeyValueStorageType {
     ) -> Result<Object, KeyValueStorageError> {
         load(forKey: key)
             .flatMap { data in
-                do {
-                    return try .success(jsonDecoder.decode(Object.self, from: data))
-                } catch let error {
-                    return .failure(.loadError(error))
-                }
+                .execute({ try jsonDecoder.decode(Object.self, from: data) }, onThrows: KeyValueStorageError.loadError)
             }
     }
 

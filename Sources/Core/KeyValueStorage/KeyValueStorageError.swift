@@ -50,7 +50,7 @@ public struct KeyValueStorageError: ErrorReportable {
     }
 }
 
-// MARK: - NetworkError instances
+// MARK: - KeyValueStorageError instances
 
 public extension KeyValueStorageError {
     static var storeError: (Error) -> Self = { error in
