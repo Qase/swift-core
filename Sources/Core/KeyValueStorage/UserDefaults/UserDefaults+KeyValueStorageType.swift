@@ -13,7 +13,7 @@ extension UserDefaults: KeyValueStorageType {
             return .failure(.noData)
         }
         
-        return .execute( { try jsonDecoder.decode(Object.self, from: data) }, onThrows: KeyValueStorageError.loadError)
+        return .execute({ try jsonDecoder.decode(Object.self, from: data) }, onThrows: KeyValueStorageError.loadError)
     }
 
     public func store<Object: Encodable>(
