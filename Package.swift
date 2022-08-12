@@ -28,9 +28,6 @@ let package = Package(
     ),
   ],
   dependencies: [
-    // NOTE: For some reason, this CasePaths dependency has to be declared without the ".git" extension.
-    // - if the extension is present, the compilation of the package fails with "Missing module CasePaths"
-    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "0.7.0"),
     .package(url: "https://github.com/pointfreeco/combine-schedulers", from: "0.4.0"),
   ],
   targets: [
