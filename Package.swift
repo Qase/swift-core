@@ -22,23 +22,21 @@ let package = Package(
       name: "ErrorReporting",
       targets: ["ErrorReporting"]
     ),
+    .library(
+      name: "KeyValueStorage",
+      targets: ["KeyValueStorage"]
+    ),
   ],
   dependencies: [
     // NOTE: For some reason, this CasePaths dependency has to be declared without the ".git" extension.
     // - if the extension is present, the compilation of the package fails with "Missing module CasePaths"
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "0.7.0"),
     .package(url: "https://github.com/pointfreeco/combine-schedulers", from: "0.4.0"),
-    .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture.git", from: "0.5.0"),
-    .package(name: "overture-operators", url: "https://github.com/Qase/swift-overture-operators.git", .branch("master"))
   ],
   targets: [
     .target(
       name: "CoreToolkit",
       dependencies: [
-        "ErrorReporting",
-        .product(name: "CasePaths", package: "swift-case-paths"),
-        "Overture",
-        .product(name: "OvertureOperators", package: "overture-operators"),
       ]
     ),
     .testTarget(
@@ -69,6 +67,20 @@ let package = Package(
       name: "ErrorReportingTests",
       dependencies: [
         "ErrorReporting"
+      ]
+    ),
+    .target(
+      name: "KeyValueStorage",
+      dependencies: [
+        "CombineExtensions",
+        "ErrorReporting",
+      ]
+    ),
+    .testTarget(
+      name: "KeyValueStorageTests",
+      dependencies: [
+        "KeyValueStorage",
+        .product(name: "CombineSchedulers", package: "combine-schedulers"),
       ]
     ),
   ]
