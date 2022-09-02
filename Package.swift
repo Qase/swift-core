@@ -4,48 +4,55 @@
 import PackageDescription
 
 let package = Package(
-  name: "core",
+  name: "Core",
   platforms: [
     .iOS(.v14),
     .macOS(.v11)
   ],
   products: [
     .library(
-      name: "Core",
-      targets: ["Core"]
+      name: "CoreToolkit",
+      targets: ["CoreToolkit"]
+    ),
+    .library(
+      name: "CombineExtensions",
+      targets: ["CombineExtensions"]
     ),
     .library(
       name: "ErrorReporting",
       targets: ["ErrorReporting"]
     ),
+    .library(
+      name: "KeyValueStorage",
+      targets: ["KeyValueStorage"]
+    ),
   ],
   dependencies: [
-    // NOTE: For some reason, this CasePaths dependency has to be declared without the ".git" extension.
-    // - if the extension is present, the compilation of the package fails with "Missing module CasePaths"
-    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "0.7.0"),
-    .package(url: "https://github.com/CombineCommunity/CombineExt.git", from: "1.0.0"),
     .package(url: "https://github.com/pointfreeco/combine-schedulers", from: "0.4.0"),
-    .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture.git", from: "0.5.0"),
-    .package(name: "overture-operators", url: "https://github.com/Qase/swift-overture-operators.git", .branch("master"))
   ],
   targets: [
     .target(
-      name: "Core",
+      name: "CoreToolkit",
       dependencies: [
-        .product(name: "CasePaths", package: "swift-case-paths"),
-        "CombineExt",
-        "Overture",
-        .product(name: "OvertureOperators", package: "overture-operators"),
       ]
     ),
     .testTarget(
-      name: "CoreTests",
+      name: "CoreToolkitTests",
       dependencies: [
-        "Core",
-        "CombineExt",
+        "CoreToolkit"
+      ]
+    ),
+    .target(
+      name: "CombineExtensions",
+      dependencies: [
+        "ErrorReporting"
+      ]
+    ),
+    .testTarget(
+      name: "CombineExtensionsTests",
+      dependencies: [
+        "CombineExtensions",
         .product(name: "CombineSchedulers", package: "combine-schedulers"),
-        "Overture",
-        .product(name: "OvertureOperators", package: "overture-operators"),
       ]
     ),
     .target(
@@ -57,6 +64,20 @@ let package = Package(
       name: "ErrorReportingTests",
       dependencies: [
         "ErrorReporting"
+      ]
+    ),
+    .target(
+      name: "KeyValueStorage",
+      dependencies: [
+        "CombineExtensions",
+        "ErrorReporting",
+      ]
+    ),
+    .testTarget(
+      name: "KeyValueStorageTests",
+      dependencies: [
+        "KeyValueStorage",
+        .product(name: "CombineSchedulers", package: "combine-schedulers"),
       ]
     ),
   ]
