@@ -57,7 +57,7 @@ extension KeyValueStorageError: Equatable {
   }
 }
 
-// MARK: - Instances
+// MARK: - KeyValueStorageError + instances
 
 public extension KeyValueStorageError {
   static func storeFailed(_ innerError: Error?) -> Self {

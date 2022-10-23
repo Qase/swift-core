@@ -39,7 +39,7 @@ extension GeneralError: Equatable {
   }
 }
 
-// MARK: - Instances
+// MARK: - GeneralError + instances
 
 public extension GeneralError {
   static func weakNil(file: String, line: Int) -> Self {

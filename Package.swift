@@ -19,12 +19,20 @@ let package = Package(
       targets: ["CombineExtensions"]
     ),
     .library(
+      name: "CoreDatabase",
+      targets: ["CoreDatabase"]
+    ),
+    .library(
       name: "ErrorReporting",
       targets: ["ErrorReporting"]
     ),
     .library(
       name: "KeyValueStorage",
       targets: ["KeyValueStorage"]
+    ),
+    .library(
+      name: "ModelConvertible",
+      targets: ["ModelConvertible"]
     ),
     .library(
       name: "Networking",
@@ -68,6 +76,20 @@ let package = Package(
       ]
     ),
     .target(
+      name: "CoreDatabase",
+      dependencies: [
+        "CombineExtensions",
+        "CoreToolkit",
+        "ErrorReporting"
+      ]
+    ),
+    .testTarget(
+      name: "CoreDatabaseTests",
+      dependencies: [
+        "CoreDatabase"
+      ]
+    ),
+    .target(
       name: "ErrorReporting",
       dependencies: [
       ]
@@ -90,6 +112,17 @@ let package = Package(
       dependencies: [
         "KeyValueStorage",
         .product(name: "CombineSchedulers", package: "combine-schedulers"),
+      ]
+    ),
+    .target(
+      name: "ModelConvertible",
+      dependencies: [
+      ]
+    ),
+    .testTarget(
+      name: "ModelConvertibleTests",
+      dependencies: [
+        "ModelConvertible"
       ]
     ),
     .target(
