@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import RequestBuilder
 
 public protocol AuthorizedNetworkClientType: NetworkClientType {
   var jsonDecoder: JSONDecoder { get }

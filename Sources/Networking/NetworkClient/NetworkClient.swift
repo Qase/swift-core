@@ -3,6 +3,7 @@ import CombineExtensions
 import Foundation
 import Network
 import NetworkMonitoring
+import RequestBuilder
 
 public struct NetworkClient: NetworkClientType {
   public typealias Response = (headers: [HTTPHeader], body: Data)

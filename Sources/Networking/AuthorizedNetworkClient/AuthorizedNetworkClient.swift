@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import RequestBuilder
 
 // MARK: - AuthorizedNetworkClient
 
@@ -16,7 +17,7 @@ public struct AuthorizedNetworkClient<AnyToken: TokenRepresenting> {
 
   public init(
     jsonDecoder: JSONDecoder = JSONDecoder(),
-    networkClient: NetworkClientType,TokenType
+    networkClient: NetworkClientType,
     tokenClient: TokenClient<AnyToken>,
     ignoreOutputOnError: @escaping (AuthorizedNetworkError) -> Bool = { _ in false }
   ) {

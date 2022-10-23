@@ -34,6 +34,10 @@ let package = Package(
       name: "NetworkMonitoring",
       targets: ["NetworkMonitoring"]
     ),
+    .library(
+      name: "RequestBuilder",
+      targets: ["RequestBuilder"]
+    )
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/combine-schedulers", from: "0.4.0"),
@@ -95,6 +99,7 @@ let package = Package(
         "ErrorReporting",
         "KeyValueStorage",
         "NetworkMonitoring",
+        "RequestBuilder",
       ]
     ),
     .testTarget(
@@ -107,7 +112,21 @@ let package = Package(
     .target(
       name: "NetworkMonitoring",
       dependencies: [
+        "CombineExtensions",
       ]
     ),
+    .target(
+      name: "RequestBuilder",
+      dependencies: [
+        "CoreToolkit",
+        "ErrorReporting",
+      ]
+    ),
+    .testTarget(
+      name: "RequestBuilderTests",
+      dependencies: [
+        "RequestBuilder",
+      ]
+    )
   ]
 )

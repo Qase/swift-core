@@ -2,6 +2,7 @@ import Combine
 import CombineExtensions
 import ErrorReporting
 import Foundation
+import RequestBuilder
 
 public extension Publisher {
   func decode<Item, Coder, DecodeError>(

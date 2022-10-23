@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import RequestBuilder
 
 public protocol NetworkClientType {
   func request(_ urlRequest: URLRequest) -> AnyPublisher<(headers: [HTTPHeader], body: Data), NetworkError>
