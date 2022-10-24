@@ -11,16 +11,16 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "CoreToolkit",
-      targets: ["CoreToolkit"]
-    ),
-    .library(
       name: "CombineExtensions",
       targets: ["CombineExtensions"]
     ),
     .library(
       name: "CoreDatabase",
       targets: ["CoreDatabase"]
+    ),
+    .library(
+      name: "CoreToolkit",
+      targets: ["CoreToolkit"]
     ),
     .library(
       name: "ErrorReporting",
@@ -53,17 +53,6 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "CoreToolkit",
-      dependencies: [
-      ]
-    ),
-    .testTarget(
-      name: "CoreToolkitTests",
-      dependencies: [
-        "CoreToolkit"
-      ]
-    ),
-    .target(
       name: "CombineExtensions",
       dependencies: [
         "ErrorReporting"
@@ -88,6 +77,17 @@ let package = Package(
       name: "CoreDatabaseTests",
       dependencies: [
         "CoreDatabase"
+      ]
+    ),
+    .target(
+      name: "CoreToolkit",
+      dependencies: [
+      ]
+    ),
+    .testTarget(
+      name: "CoreToolkitTests",
+      dependencies: [
+        "CoreToolkit"
       ]
     ),
     .target(
