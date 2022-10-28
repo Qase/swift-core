@@ -37,7 +37,7 @@ public struct NetworkClient: NetworkClientType {
       return .failure(.unauthorized)
     case 408:
       return .failure(.timeoutError)
-    case 400, 402..<500:
+    case 400..<500:
       return .failure(.clientError(statusCode: statusCode))
     case 500..<600:
       return .failure(.serverError(statusCode: statusCode))
