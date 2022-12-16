@@ -26,6 +26,18 @@ let package = Package(
       name: "KeyValueStorage",
       targets: ["KeyValueStorage"]
     ),
+    .library(
+      name: "Networking",
+      targets: ["Networking"]
+    ),
+    .library(
+      name: "NetworkMonitoring",
+      targets: ["NetworkMonitoring"]
+    ),
+    .library(
+      name: "RequestBuilder",
+      targets: ["RequestBuilder"]
+    )
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/combine-schedulers", from: "0.4.0"),
@@ -80,5 +92,41 @@ let package = Package(
         .product(name: "CombineSchedulers", package: "combine-schedulers"),
       ]
     ),
+    .target(
+      name: "Networking",
+      dependencies: [
+        "CombineExtensions",
+        "ErrorReporting",
+        "KeyValueStorage",
+        "NetworkMonitoring",
+        "RequestBuilder",
+      ]
+    ),
+    .testTarget(
+      name: "NetworkingTests",
+      dependencies: [
+        "Networking",
+        .product(name: "CombineSchedulers", package: "combine-schedulers"),
+      ]
+    ),
+    .target(
+      name: "NetworkMonitoring",
+      dependencies: [
+        "CombineExtensions",
+      ]
+    ),
+    .target(
+      name: "RequestBuilder",
+      dependencies: [
+        "CoreToolkit",
+        "ErrorReporting",
+      ]
+    ),
+    .testTarget(
+      name: "RequestBuilderTests",
+      dependencies: [
+        "RequestBuilder",
+      ]
+    )
   ]
 )
