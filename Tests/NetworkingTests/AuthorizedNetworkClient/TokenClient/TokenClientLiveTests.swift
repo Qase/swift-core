@@ -239,7 +239,8 @@ class TokenClientLiveTests: XCTestCase {
           case let .failure(error):
             XCTFail("Unexpected event received - error: \(error).")
           }
-        }, receiveValue: { _ in
+        },
+        receiveValue: { _ in
           refreshValueReceived = true
         }
       )
@@ -259,7 +260,8 @@ class TokenClientLiveTests: XCTestCase {
           case let .failure(error):
             XCTFail("Unexpected event received - error: \(error).")
           }
-        }, receiveValue: { currentToken in
+        },
+        receiveValue: { currentToken in
           XCTAssertEqual(currentToken, .init(value: "new_localToken"))
           currentTokenValueReceived = true
         }
@@ -326,7 +328,8 @@ class TokenClientLiveTests: XCTestCase {
           case let .failure(error):
             XCTFail("Unexpected event received - error: \(error).")
           }
-        }, receiveValue: { _ in
+        },
+        receiveValue: { _ in
           valueReceived = true
         }
       )
@@ -422,9 +425,11 @@ class TokenClientLiveTests: XCTestCase {
           })
           .delay(for: 1, scheduler: self.testScheduler)
           .eraseToAnyPublisher()
-      }, storeToken: { _ in
+      },
+      storeToken: { _ in
         fatalError("Should not be called!")
-      }, refreshTokenRequest: { _ in
+      },
+      refreshTokenRequest: { _ in
         fatalError("Should not be called!")
       }
     )
@@ -471,9 +476,11 @@ class TokenClientLiveTests: XCTestCase {
           })
           .delay(for: 1, scheduler: self.testScheduler)
           .eraseToAnyPublisher()
-      }, storeToken: { _ in
+      },
+      storeToken: { _ in
         fatalError("Should not be called!")
-      }, refreshTokenRequest: { _ in
+      },
+      refreshTokenRequest: { _ in
         Fail(error: .refreshError)
           .handleEvents(receiveSubscription: { _ in
             refreshTokenCount += 1
@@ -527,14 +534,16 @@ class TokenClientLiveTests: XCTestCase {
           })
           .delay(for: 1, scheduler: self.testScheduler)
           .eraseToAnyPublisher()
-      }, storeToken: { _ in
+      },
+      storeToken: { _ in
         Fail(error: .storeTokenError)
           .handleEvents(receiveSubscription: { _ in
             storeTokenCount += 1
           })
           .delay(for: 1, scheduler: self.testScheduler)
           .eraseToAnyPublisher()
-      }, refreshTokenRequest: { invalidToken in
+      },
+      refreshTokenRequest: { invalidToken in
         Just(TestToken(value: "new_\(invalidToken)"))
           .setFailureType(to: TokenError.self)
           .handleEvents(receiveSubscription: { _ in

@@ -47,7 +47,7 @@ extension TokenPersistenceError: Equatable {
   }
 }
 
-// MARK: - Instances
+// MARK: - TokenPersistenceError + instances
 
 extension TokenPersistenceError {
   static var loadTokenError: Self {

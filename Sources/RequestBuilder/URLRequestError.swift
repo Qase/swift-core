@@ -50,7 +50,7 @@ extension URLRequestError: Equatable {
   }
 }
 
-// MARK: - Instances
+// MARK: - URLRequestError + instances
 
 public extension URLRequestError {
   static var endpointParsingError: Self {

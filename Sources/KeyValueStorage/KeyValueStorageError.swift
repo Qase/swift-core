@@ -9,7 +9,6 @@ public struct KeyValueStorageError: ErrorReporting {
     case loadFailed(Error?)
     /// Triggered when delete error occurs.
     case removeFailed(Error?)
-    case removeScopeFailed(_ keys: [String], description: String)
     /// Triggered when decoding error occurs.
     case decodingFailed(Error?)
 
@@ -21,8 +20,6 @@ public struct KeyValueStorageError: ErrorReporting {
         return "loadFailed(error: \(String(describing: error)))"
       case let .removeFailed(error):
         return "removeFailed(error: \(String(describing: error)))"
-      case let .removeScopeFailed(keys, error):
-        return "removeScopeFailed(for keys: \(keys), error: \(error))"
       case let .decodingFailed(error):
         return "decodingFailed(error: \(String(describing: error)))"
       }
@@ -57,7 +54,7 @@ extension KeyValueStorageError: Equatable {
   }
 }
 
-// MARK: - Instances
+// MARK: - KeyValueStorageError + instances
 
 public extension KeyValueStorageError {
   static func storeFailed(_ innerError: Error?) -> Self {
@@ -74,9 +71,5 @@ public extension KeyValueStorageError {
 
   static func decodingFailed(_ innerError: Error?) -> Self {
     KeyValueStorageError(cause: .decodingFailed(innerError))
-  }
-
-  static func removeScopeFailed(keys: [String], description: String) -> Self {
-    KeyValueStorageError(cause: .removeScopeFailed(keys, description: description))
   }
 }

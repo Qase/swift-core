@@ -1,9 +1,10 @@
 import Combine
 import Foundation
+import XCTestDynamicOverlay
 
 extension URLRequester {
   static func mock(
-    request: @escaping RequestFunction = { _ in { _ in fatalError("Not implemented!") } }
+    request: @escaping RequestFunction = { _ in XCTUnimplemented("\(Self.self).request") }
   ) -> Self {
     .init(request: request)
   }

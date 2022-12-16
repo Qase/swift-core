@@ -50,7 +50,7 @@ extension AuthorizedNetworkError: Equatable {
   }
 }
 
-// MARK: - Instances
+// MARK: - AuthorizedNetworkError + instances
 
 public extension AuthorizedNetworkError {
   static var networkError: Self {

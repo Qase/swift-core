@@ -11,12 +11,16 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "CoreToolkit",
-      targets: ["CoreToolkit"]
-    ),
-    .library(
       name: "CombineExtensions",
       targets: ["CombineExtensions"]
+    ),
+    .library(
+      name: "CoreDatabase",
+      targets: ["CoreDatabase"]
+    ),
+    .library(
+      name: "CoreToolkit",
+      targets: ["CoreToolkit"]
     ),
     .library(
       name: "ErrorReporting",
@@ -25,6 +29,10 @@ let package = Package(
     .library(
       name: "KeyValueStorage",
       targets: ["KeyValueStorage"]
+    ),
+    .library(
+      name: "ModelConvertible",
+      targets: ["ModelConvertible"]
     ),
     .library(
       name: "Networking",
@@ -41,19 +49,9 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/combine-schedulers", from: "0.4.0"),
+    .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.4.0"),
   ],
   targets: [
-    .target(
-      name: "CoreToolkit",
-      dependencies: [
-      ]
-    ),
-    .testTarget(
-      name: "CoreToolkitTests",
-      dependencies: [
-        "CoreToolkit"
-      ]
-    ),
     .target(
       name: "CombineExtensions",
       dependencies: [
@@ -65,6 +63,31 @@ let package = Package(
       dependencies: [
         "CombineExtensions",
         .product(name: "CombineSchedulers", package: "combine-schedulers"),
+      ]
+    ),
+    .target(
+      name: "CoreDatabase",
+      dependencies: [
+        "CombineExtensions",
+        "CoreToolkit",
+        "ErrorReporting"
+      ]
+    ),
+    .testTarget(
+      name: "CoreDatabaseTests",
+      dependencies: [
+        "CoreDatabase"
+      ]
+    ),
+    .target(
+      name: "CoreToolkit",
+      dependencies: [
+      ]
+    ),
+    .testTarget(
+      name: "CoreToolkitTests",
+      dependencies: [
+        "CoreToolkit"
       ]
     ),
     .target(
@@ -93,6 +116,17 @@ let package = Package(
       ]
     ),
     .target(
+      name: "ModelConvertible",
+      dependencies: [
+      ]
+    ),
+    .testTarget(
+      name: "ModelConvertibleTests",
+      dependencies: [
+        "ModelConvertible"
+      ]
+    ),
+    .target(
       name: "Networking",
       dependencies: [
         "CombineExtensions",
@@ -100,6 +134,7 @@ let package = Package(
         "KeyValueStorage",
         "NetworkMonitoring",
         "RequestBuilder",
+        .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
       ]
     ),
     .testTarget(

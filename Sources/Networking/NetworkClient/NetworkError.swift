@@ -68,7 +68,7 @@ extension NetworkError: Equatable {
   }
 }
 
-// MARK: - Instances
+// MARK: - NetworkError + instances
 
 public extension NetworkError {
   static func urlError(_ innerError: URLError) -> Self {

@@ -47,7 +47,7 @@ extension TokenError: Equatable {
   }
 }
 
-// MARK: - Instances
+// MARK: - TokenError + instances
 
 extension TokenError {
   static var localTokenError: Self {
