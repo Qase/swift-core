@@ -1,6 +1,6 @@
 import Foundation
 
-extension URLRequester {
+public extension URLRequester {
   static let live: Self = .init { urlSessionConfiguration in { urlRequest in
       URLSession(configuration: urlSessionConfiguration)
         .dataTaskPublisher(for: urlRequest)
