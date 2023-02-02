@@ -122,6 +122,11 @@ extension AuthorizedNetworkClient: NetworkClientType {
   public func request(_ urlRequest: URLRequest) -> AnyPublisher<(headers: [HTTPHeader], body: Data), NetworkError> {
     networkClient.request(urlRequest)
   }
+  
+  public func request(_ urlRequest: URLRequest) async throws -> (headers: [HTTPHeader], body: Data) {
+    try await request(urlRequest)
+      .async()
+  }
 }
 
 // MARK: - AuthorizedNetworkError + computed
