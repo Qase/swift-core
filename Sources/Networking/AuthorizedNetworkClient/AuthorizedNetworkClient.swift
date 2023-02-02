@@ -57,6 +57,13 @@ public extension AuthorizedNetworkClient {
     }
     .eraseToAnyPublisher()
   }
+  
+  func authorizedRequest(
+    _ urlRequest: URLRequest
+  ) async throws -> (headers: [HTTPHeader], body: Data) {
+    try await authorizedRequest(urlRequest)
+      .async()
+  }
 }
 
 // MARK: - Publisher + whenUnauthorized
