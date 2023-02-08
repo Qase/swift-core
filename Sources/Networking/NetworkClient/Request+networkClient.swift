@@ -18,7 +18,7 @@ public extension Request {
       .flatMap(networkClient.request)
       .eraseToAnyPublisher()
   }
-  
+
   func execute<T: Decodable>(
     using networkClient: NetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder()
@@ -27,7 +27,7 @@ public extension Request {
       .flatMap { networkClient.request($0, jsonDecoder: jsonDecoder) }
       .eraseToAnyPublisher()
   }
-  
+
   func execute<T: Decodable>(
     using networkClient: NetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder()
@@ -47,7 +47,7 @@ public extension Request {
     try await execute(using: networkClient)
       .async()
   }
-  
+
   func execute<T: Decodable>(
     using networkClient: NetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder()
@@ -55,7 +55,7 @@ public extension Request {
     try await execute(using: networkClient, jsonDecoder: jsonDecoder)
       .async()
   }
-  
+
   func execute<T: Decodable>(
     using networkClient: NetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder()

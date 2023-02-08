@@ -16,7 +16,7 @@ public extension NetworkClientType {
     request(urlRequest)
       .decode(type: T.self, decoder: jsonDecoder, mapError: NetworkError.jsonDecodingError)
   }
-  
+
   func request<T: Decodable>(
     _ urlRequest: URLRequest,
     jsonDecoder: JSONDecoder = JSONDecoder(),
@@ -24,7 +24,7 @@ public extension NetworkClientType {
   ) -> AnyPublisher<(headers: [HTTPHeader], object: T), NetworkError> {
     request(urlRequest, jsonDecoder: jsonDecoder)
   }
-  
+
   func request<T: Decodable>(
     _ urlRequest: URLRequest,
     jsonDecoder: JSONDecoder = JSONDecoder()
@@ -33,7 +33,7 @@ public extension NetworkClientType {
       .map(\.object)
       .eraseToAnyPublisher()
   }
-  
+
   func request<T: Decodable>(
     _ urlRequest: URLRequest,
     jsonDecoder: JSONDecoder = JSONDecoder(),
@@ -41,7 +41,7 @@ public extension NetworkClientType {
   ) -> AnyPublisher<T, NetworkError> {
     request(urlRequest, jsonDecoder: jsonDecoder)
   }
-  
+
   func request(_ urlRequest: URLRequest) -> AnyPublisher<Void, NetworkError> {
     request(urlRequest)
       .map { _, _ in () }
@@ -59,7 +59,7 @@ public extension NetworkClientType {
     try await request(urlRequest, jsonDecoder: jsonDecoder)
       .async()
   }
-  
+
   func request<T: Decodable>(
     _ urlRequest: URLRequest,
     jsonDecoder: JSONDecoder = JSONDecoder(),
@@ -68,7 +68,7 @@ public extension NetworkClientType {
     try await request(urlRequest, jsonDecoder: jsonDecoder, ofResponseType: ofResponseType)
       .async()
   }
-  
+
   func request<T: Decodable>(
     _ urlRequest: URLRequest,
     jsonDecoder: JSONDecoder = JSONDecoder()
@@ -76,7 +76,7 @@ public extension NetworkClientType {
     try await request(urlRequest, jsonDecoder: jsonDecoder)
       .async()
   }
-  
+
   func request<T: Decodable>(
     _ urlRequest: URLRequest,
     jsonDecoder: JSONDecoder = JSONDecoder(),
@@ -85,7 +85,7 @@ public extension NetworkClientType {
     try await request(urlRequest, jsonDecoder: jsonDecoder, ofResponseType: ofResponseType)
       .async()
   }
-  
+
   func request(_ urlRequest: URLRequest) async throws -> Void {
     _ = try await request(urlRequest)
       .async()

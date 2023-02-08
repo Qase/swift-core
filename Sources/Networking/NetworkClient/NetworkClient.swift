@@ -7,14 +7,14 @@ import RequestBuilder
 
 public struct NetworkClient: NetworkClientType {
   public typealias Response = (headers: [HTTPHeader], body: Data)
-  
+
   private let urlSessionConfiguration: URLSessionConfiguration
   private let urlRequester: URLRequester
   private let networkMonitorClient: NetworkMonitorClient
   private let logUUID: () -> UUID
   private let loggerClient: NetworkLoggerClient?
   private let transformRequest: (URLRequest) -> URLRequest
-  
+
   public init(
     urlSessionConfiguration: URLSessionConfiguration,
     urlRequester: URLRequester,
@@ -30,7 +30,7 @@ public struct NetworkClient: NetworkClientType {
     self.loggerClient = loggerClient
     self.transformRequest = transformRequest
   }
-  
+
   private var processedStatusCode: (Int) -> Result<Void, NetworkError> = { statusCode in
     switch statusCode {
     case 401:
@@ -45,7 +45,7 @@ public struct NetworkClient: NetworkClientType {
       return .success(())
     }
   }
-  
+
   private func performRequest(_ urlRequest: URLRequest) -> AnyPublisher<Response, NetworkError> {
     let isNetworkAvailable = networkMonitorClient.isNetworkAvailable
       .prefix(1)
@@ -53,9 +53,9 @@ public struct NetworkClient: NetworkClientType {
       .flatMapResult { isNetworkAvailable -> Result<Void, NetworkError> in
         isNetworkAvailable ? .success(()) : .failure(.noConnection)
       }
-    
+
     let requestUUID = logUUID()
-    
+
     let request: AnyPublisher<Response, NetworkError> = Just<URLRequest>(urlRequest)
       .map(transformRequest)
       .setFailureType(to: URLError.self)
@@ -65,33 +65,33 @@ public struct NetworkClient: NetworkClientType {
         guard case .timedOut = urlError.code else {
           return .urlError(urlError)
         }
-        
+
         return .timeoutError
       }
       .flatMap { data, response -> AnyPublisher<Response, NetworkError> in
         guard let httpResponse = response as? HTTPURLResponse else {
           loggerClient?.logURLResponse(requestUUID, response, data)
-          
+
           return Fail<Response, NetworkError>(error: .invalidResponse)
             .eraseToAnyPublisher()
         }
-        
+
         loggerClient?.logHTTPURLResponse(requestUUID, httpResponse, data)
-        
+
         let response = (headers: httpResponse.allHeaderFields.httpHeaders, body: data)
-        
+
         return Result<Void, NetworkError>.Publisher(processedStatusCode(httpResponse.statusCode))
           .mapError {
             var networkError = $0
             networkError.requestID = response.headers[.requestID]
-            
+
             return networkError
           }
           .map { response }
           .eraseToAnyPublisher()
       }
       .eraseToAnyPublisher()
-    
+
     return isNetworkAvailable
       .flatMap { _ in request }
       .eraseToAnyPublisher()
@@ -104,7 +104,7 @@ public extension NetworkClient {
   func request(_ urlRequest: URLRequest) -> AnyPublisher<Response, NetworkError> {
     performRequest(urlRequest)
   }
-  
+
   func request(_ urlRequest: URLRequest) async throws -> Response {
     try await request(urlRequest)
       .async()
