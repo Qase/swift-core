@@ -104,9 +104,4 @@ public extension NetworkClient {
   func request(_ urlRequest: URLRequest) -> AnyPublisher<Response, NetworkError> {
     performRequest(urlRequest)
   }
-
-  func request(_ urlRequest: URLRequest) async throws -> Response {
-    try await request(urlRequest)
-      .async()
-  }
 }
