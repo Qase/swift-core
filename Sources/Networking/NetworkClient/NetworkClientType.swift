@@ -48,3 +48,46 @@ public extension NetworkClientType {
       .eraseToAnyPublisher()
   }
 }
+
+// MARK: - Synthetized async await functions
+
+public extension NetworkClientType {
+  func request<T: Decodable>(
+    _ urlRequest: URLRequest,
+    jsonDecoder: JSONDecoder = JSONDecoder()
+  ) async throws -> (headers: [HTTPHeader], object: T) {
+    try await request(urlRequest, jsonDecoder: jsonDecoder)
+      .async()
+  }
+
+  func request<T: Decodable>(
+    _ urlRequest: URLRequest,
+    jsonDecoder: JSONDecoder = JSONDecoder(),
+    ofResponseType: T.Type
+  ) async throws -> (headers: [HTTPHeader], object: T) {
+    try await request(urlRequest, jsonDecoder: jsonDecoder, ofResponseType: ofResponseType)
+      .async()
+  }
+
+  func request<T: Decodable>(
+    _ urlRequest: URLRequest,
+    jsonDecoder: JSONDecoder = JSONDecoder()
+  ) async throws -> T {
+    try await request(urlRequest, jsonDecoder: jsonDecoder)
+      .async()
+  }
+
+  func request<T: Decodable>(
+    _ urlRequest: URLRequest,
+    jsonDecoder: JSONDecoder = JSONDecoder(),
+    ofResponseType: T.Type
+  ) async throws -> T {
+    try await request(urlRequest, jsonDecoder: jsonDecoder, ofResponseType: ofResponseType)
+      .async()
+  }
+
+  func request(_ urlRequest: URLRequest) async throws -> Void {
+    _ = try await request(urlRequest)
+      .async()
+  }
+}

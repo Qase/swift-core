@@ -55,3 +55,41 @@ public extension AuthorizedNetworkClientType {
     authorizedRequest(urlRequest, jsonDecoder: jsonDecoder)
   }
 }
+
+// MARK: - Synthetized async await functions
+
+public extension AuthorizedNetworkClientType {
+  func authorizedRequest<T: Decodable>(
+    _ urlRequest: URLRequest,
+    jsonDecoder: JSONDecoder? = nil
+  ) async throws -> (headers: [HTTPHeader], object: T) {
+    try await authorizedRequest(urlRequest, jsonDecoder: jsonDecoder)
+      .async()
+  }
+
+  func authorizedRequest<T: Decodable>(
+    _ urlRequest: URLRequest,
+    jsonDecoder: JSONDecoder? = nil,
+    ofResponseType: T.Type
+  ) async throws -> (headers: [HTTPHeader], object: T) {
+    try await authorizedRequest(urlRequest, jsonDecoder: jsonDecoder, ofResponseType: ofResponseType)
+      .async()
+  }
+
+  func authorizedRequest<T: Decodable>(
+    _ urlRequest: URLRequest,
+    jsonDecoder: JSONDecoder? = nil
+  ) async throws -> T {
+    try await authorizedRequest(urlRequest, jsonDecoder: jsonDecoder)
+      .async()
+  }
+
+  func authorizedRequest<T: Decodable>(
+    _ urlRequest: URLRequest,
+    jsonDecoder: JSONDecoder? = nil,
+    ofResponseType: T.Type
+  ) async throws -> T {
+    try await authorizedRequest(urlRequest, jsonDecoder: jsonDecoder, ofResponseType: ofResponseType)
+      .async()
+  }
+}
