@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct NetworkError: ErrorReporting {
+public struct NetworkError: ErrorReporting, URLRequestBuilderErrorCapable {
   public enum Cause: Error, CustomStringConvertible {
     case urlError(URLError)
     case invalidResponse
@@ -10,7 +10,7 @@ public struct NetworkError: ErrorReporting {
     case serverError(statusCode: Int)
     case noConnection
     case jsonDecodingError(Error)
-    case urlRequestError
+    case urlRequestBuilderError
     case timeout
 
     public var description: String {
@@ -29,8 +29,8 @@ public struct NetworkError: ErrorReporting {
         return "noConnection"
       case let .jsonDecodingError(error):
         return "jsonDecodingError(error: \(error))"
-      case .urlRequestError:
-        return "urlRequestError"
+      case .urlRequestBuilderError:
+        return "urlRequestBuilderError"
       case .timeout:
         return "timeout"
       }
@@ -99,8 +99,8 @@ public extension NetworkError {
     NetworkError(cause: .jsonDecodingError(innerError))
   }
 
-  static var urlRequestError: Self {
-    NetworkError(cause: .urlRequestError)
+  static var urlRequestBuilderError: Self {
+    NetworkError(cause: .urlRequestBuilderError)
   }
 
   static var timeoutError: Self {

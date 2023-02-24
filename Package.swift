@@ -118,6 +118,7 @@ let package = Package(
     .target(
       name: "ModelConvertible",
       dependencies: [
+        "ErrorReporting",
       ]
     ),
     .testTarget(
@@ -132,6 +133,7 @@ let package = Package(
         "CombineExtensions",
         "ErrorReporting",
         "KeyValueStorage",
+        "ModelConvertible",
         "NetworkMonitoring",
         "RequestBuilder",
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
