@@ -91,7 +91,6 @@ final class Request_networkClientTests: XCTestCase {
 
   func test_URLRequest_build_error() {
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .mock(),
       networkMonitorClient: .mock(),
       logUUID: UUID.init,
@@ -136,7 +135,6 @@ final class Request_networkClientTests: XCTestCase {
     let scheduler = DispatchQueue.immediate
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .failureMock(withError: URLError(.badServerResponse), delayedFor: 0, scheduler: scheduler),
       networkMonitorClient: .mockJust(value: .available, delayedFor: 0, scheduler: scheduler),
       logUUID: UUID.init,
@@ -173,7 +171,6 @@ final class Request_networkClientTests: XCTestCase {
     let scheduler = DispatchQueue.immediate
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .failureMock(withError: URLError(.badServerResponse), delayedFor: 0, scheduler: scheduler),
       networkMonitorClient: .mockJust(value: .available, delayedFor: 0, scheduler: scheduler),
       logUUID: UUID.init,
@@ -213,7 +210,6 @@ final class Request_networkClientTests: XCTestCase {
     let scheduler = DispatchQueue.immediate
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), HTTPURLResponse.mock), delayedFor: 0, scheduler: scheduler),
       networkMonitorClient: .mockJust(value: .available, delayedFor: 0, scheduler: scheduler),
       logUUID: UUID.init,
@@ -251,7 +247,6 @@ final class Request_networkClientTests: XCTestCase {
     let scheduler = DispatchQueue.immediate
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data.userMock, HTTPURLResponse.mock), delayedFor: 0, scheduler: scheduler),
       networkMonitorClient: .mockJust(value: .available, delayedFor: 0, scheduler: scheduler),
       logUUID: UUID.init,

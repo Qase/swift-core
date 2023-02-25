@@ -13,7 +13,6 @@ extension NetworkClientTests {
     )!
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), httpResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -59,7 +58,6 @@ extension NetworkClientTests {
     )!
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), httpResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -105,7 +103,6 @@ extension NetworkClientTests {
     )!
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), httpResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -144,7 +141,6 @@ extension NetworkClientTests {
 
   func test_URLError_failure_response() {
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .failureMock(withError: URLError(.badServerResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -185,7 +181,6 @@ extension NetworkClientTests {
     let urlResponse = URLResponse(url: .mock, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), urlResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -225,7 +220,6 @@ extension NetworkClientTests {
     let urlResponse = URLResponse(url: .mock, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), urlResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.unavailable], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -273,7 +267,6 @@ extension NetworkClientTests {
     let data = "invalid-data".data(using: .utf8)!
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (data, httpResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -324,7 +317,6 @@ extension NetworkClientTests {
     let urlResponse = URLResponse(url: .mock, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), urlResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: uuid,
@@ -373,7 +365,6 @@ extension NetworkClientTests {
     )!
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), httpResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -411,7 +402,6 @@ extension NetworkClientTests {
     )!
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), httpResponse), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -450,7 +440,6 @@ extension NetworkClientTests {
 
   func test_timeout_failure() {
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .failureMock(withError: .init(.timedOut), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,

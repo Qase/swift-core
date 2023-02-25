@@ -4,7 +4,7 @@ import XCTestDynamicOverlay
 
 extension URLRequester {
   static func mock(
-    request: @escaping RequestFunction = { _ in XCTUnimplemented("\(Self.self).request") }
+    request: @escaping RequestFunction = unimplemented("\(Self.self).request")
   ) -> Self {
     .init(request: request)
   }
@@ -14,12 +14,11 @@ extension URLRequester {
     delayedFor time: S.SchedulerTimeType.Stride,
     scheduler: S
   ) -> Self {
-    .init { _ in { _ in
-        Just(response)
-          .setFailureType(to: URLError.self)
-          .delay(for: time, scheduler: scheduler)
-          .eraseToAnyPublisher()
-      }
+    .init { _ in
+      Just(response)
+        .setFailureType(to: URLError.self)
+        .delay(for: time, scheduler: scheduler)
+        .eraseToAnyPublisher()
     }
   }
 
@@ -28,11 +27,10 @@ extension URLRequester {
     delayedFor time: S.SchedulerTimeType.Stride,
     scheduler: S
   ) -> Self {
-    .init { _ in { _ in
-        Fail<(data: Data, response: URLResponse), URLError>(error: error)
-          .delay(for: time, scheduler: scheduler)
-          .eraseToAnyPublisher()
-      }
+    .init { _ in
+      Fail<(data: Data, response: URLResponse), URLError>(error: error)
+        .delay(for: time, scheduler: scheduler)
+        .eraseToAnyPublisher()
     }
   }
 }

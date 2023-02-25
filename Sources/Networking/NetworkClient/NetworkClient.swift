@@ -8,7 +8,6 @@ import RequestBuilder
 public struct NetworkClient: NetworkClientType {
   public typealias Response = (headers: [HTTPHeader], body: Data)
 
-  private let urlSessionConfiguration: URLSessionConfiguration
   private let urlRequester: URLRequester
   private let networkMonitorClient: NetworkMonitorClient
   private let logUUID: () -> UUID
@@ -16,14 +15,12 @@ public struct NetworkClient: NetworkClientType {
   private let transformRequest: (URLRequest) -> URLRequest
 
   public init(
-    urlSessionConfiguration: URLSessionConfiguration,
     urlRequester: URLRequester,
     networkMonitorClient: NetworkMonitorClient,
     logUUID: @escaping () -> UUID = { .init() },
     loggerClient: NetworkLoggerClient? = nil,
     transformRequest: @escaping (URLRequest) -> URLRequest = { $0 }
   ) {
-    self.urlSessionConfiguration = urlSessionConfiguration
     self.urlRequester = urlRequester
     self.networkMonitorClient = networkMonitorClient
     self.logUUID = logUUID
@@ -60,7 +57,7 @@ public struct NetworkClient: NetworkClientType {
       .map(transformRequest)
       .setFailureType(to: URLError.self)
       .handleEvents(receiveOutput: { loggerClient?.logRequest(requestUUID, $0) })
-      .flatMap(urlRequester.request(urlSessionConfiguration))
+      .flatMap(urlRequester.request)
       .mapError { urlError -> NetworkError in
         guard case .timedOut = urlError.code else {
           return .urlError(urlError)
