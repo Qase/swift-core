@@ -11,7 +11,7 @@ private extension Result where Success == URLRequest, Failure == URLRequestError
   }
 }
 
-// MARK: - General functions working with NetworkError
+// MARK: - Syntax sugar methods working with NetworkError
 
 public extension Result where Success == URLRequest, Failure == URLRequestError {
   func executeAuthorized(
@@ -41,7 +41,7 @@ public extension Result where Success == URLRequest, Failure == URLRequestError 
   }
 }
 
-// MARK: - Syntax sugar functions working with custom Error
+// MARK: - Syntax sugar methods working with custom Error
 
 public extension Result where Success == URLRequest, Failure == URLRequestError {
   func executeAuthorized<ResultError: ErrorReporting & NetworkErrorCapable>(
@@ -49,7 +49,7 @@ public extension Result where Success == URLRequest, Failure == URLRequestError 
     mapAuthorizedNetworkError: ((AuthorizedNetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<(headers: [HTTPHeader], body: Data), ResultError> {
     execute(
-      fetcher: { authorizedNetworkClient.authorizedRequest($0) },
+      fetcher: authorizedNetworkClient.authorizedRequest,
       mapNetworkError: mapAuthorizedNetworkError
     )
   }
@@ -83,7 +83,7 @@ public extension Result where Success == URLRequest, Failure == URLRequestError 
   }
 }
 
-// MARK: - Async await functions
+// MARK: - Async await methods
 
 public extension Result where Success == URLRequest, Failure == URLRequestError {
   func executeAuthorized(

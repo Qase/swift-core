@@ -3,7 +3,7 @@ import ErrorReporting
 import Foundation
 import RequestBuilder
 
-// MARK: - General functions working with NetworkError
+// MARK: - Syntax sugar methods working with NetworkError
 
 public extension Request {
   func execute(
@@ -30,7 +30,7 @@ public extension Request {
   }
 }
 
-// MARK: - Syntax sugar functions working with custom Error
+// MARK: - Syntax sugar methods working with custom Error
 
 public extension Request {
   func execute<ResultError: ErrorReporting & URLRequestBuilderErrorCapable & NetworkErrorCapable>(
@@ -38,10 +38,7 @@ public extension Request {
     mapNetworkError: ((NetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<(headers: [HTTPHeader], body: Data), ResultError> {
     self.urlRequest
-      .execute(
-        fetcher: { networkClient.request($0) },
-        mapNetworkError: mapNetworkError
-      )
+      .execute(using: networkClient, mapNetworkError: mapNetworkError)
   }
 
   func execute<
@@ -53,10 +50,7 @@ public extension Request {
     mapNetworkError: ((NetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<(headers: [HTTPHeader], object: T), ResultError> {
     self.urlRequest
-      .execute(
-        fetcher: { networkClient.request($0, jsonDecoder: jsonDecoder) },
-        mapNetworkError: mapNetworkError
-      )
+      .execute(using: networkClient, jsonDecoder: jsonDecoder, mapNetworkError: mapNetworkError)
   }
 
   func execute<
@@ -68,14 +62,11 @@ public extension Request {
     mapNetworkError: ((NetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<T, ResultError> {
     self.urlRequest
-      .execute(
-        fetcher: { networkClient.request($0, jsonDecoder: jsonDecoder) },
-        mapNetworkError: mapNetworkError
-      )
+      .execute(using: networkClient, jsonDecoder: jsonDecoder, mapNetworkError: mapNetworkError)
   }
 }
 
-// MARK: - Async await functions
+// MARK: - Async await methods
 
 public extension Request {
   func execute(

@@ -3,7 +3,7 @@ import ErrorReporting
 import Foundation
 import RequestBuilder
 
-// MARK: - General functions working with NetworkError
+// MARK: - Syntax sugar methods working with NetworkError
 
 public extension Request {
   func executeAuthorized(
@@ -30,7 +30,7 @@ public extension Request {
   }
 }
 
-// MARK: - Syntax sugar functions working with custom Error
+// MARK: - Syntax sugar methods working with custom Error
 
 public extension Request {
   func executeAuthorized<ResultError: ErrorReporting & NetworkErrorCapable>(
@@ -38,10 +38,7 @@ public extension Request {
     mapAuthorizedNetworkError: ((AuthorizedNetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<(headers: [HTTPHeader], body: Data), ResultError> {
     self.urlRequest
-      .execute(
-        fetcher: { authorizedNetworkClient.authorizedRequest($0) },
-        mapNetworkError: mapAuthorizedNetworkError
-      )
+      .executeAuthorized(using: authorizedNetworkClient, mapAuthorizedNetworkError: mapAuthorizedNetworkError)
   }
 
   func executeAuthorized<
@@ -53,10 +50,7 @@ public extension Request {
     mapAuthorizedNetworkError: ((AuthorizedNetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<(headers: [HTTPHeader], object: T), ResultError> {
     self.urlRequest
-      .execute(
-        fetcher: { authorizedNetworkClient.authorizedRequest($0, jsonDecoder: jsonDecoder) },
-        mapNetworkError: mapAuthorizedNetworkError
-      )
+      .executeAuthorized(using: authorizedNetworkClient, jsonDecoder: jsonDecoder, mapAuthorizedNetworkError: mapAuthorizedNetworkError)
   }
 
   func executeAuthorized<
@@ -68,14 +62,11 @@ public extension Request {
     mapAuthorizedNetworkError: ((AuthorizedNetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<T, ResultError> {
     self.urlRequest
-      .execute(
-        fetcher: { authorizedNetworkClient.authorizedRequest($0, jsonDecoder: jsonDecoder) },
-        mapNetworkError: mapAuthorizedNetworkError
-      )
+      .executeAuthorized(using: authorizedNetworkClient, jsonDecoder: jsonDecoder, mapAuthorizedNetworkError: mapAuthorizedNetworkError)
   }
 }
 
-// MARK: - Async await functions
+// MARK: - Async await methods
 
 public extension Request {
   func execute(
