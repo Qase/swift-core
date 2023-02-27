@@ -39,7 +39,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -84,7 +84,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -129,7 +129,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -167,7 +167,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -207,7 +207,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -246,7 +246,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -293,7 +293,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -384,7 +384,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -428,7 +428,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -466,7 +466,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)

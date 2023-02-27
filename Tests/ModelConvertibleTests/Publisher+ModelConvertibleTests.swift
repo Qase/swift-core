@@ -1,6 +1,7 @@
 import Combine
 import ErrorReporting
 @testable import ModelConvertible
+import XCTestDynamicOverlay
 import XCTest
 
 // MARK: - Mocks
@@ -83,7 +84,7 @@ final class Publisher_ModelConvertibleTests: XCTestCase {
     }
   )
 
-  func test_publisher_external_model_converting() {
+  func test_publisher_external_model_converting_success() {
     let externalUser = ExternalUser(
       name: "external-John",
       surname: "external-Doe",
@@ -121,7 +122,7 @@ final class Publisher_ModelConvertibleTests: XCTestCase {
     XCTAssertTrue(finished)
   }
 
-  func test_publisher_domain_model_converting() {
+  func test_publisher_domain_model_converting_success() {
     let domainUser = DomainUser(
       firstName: "internal-John",
       lastName: "internal-Doe",
@@ -159,10 +160,10 @@ final class Publisher_ModelConvertibleTests: XCTestCase {
     XCTAssertTrue(finished)
   }
 
-  func test_publisher_converting_error() {
+  func test_publisher_domain_model_converting_error() {
     let failingConverter = ModelConverter<DomainUser, ExternalUser>(
       externalModelConverter: { _ in nil },
-      domainModelConverter: { _ in nil }
+      domainModelConverter: unimplemented("Should not be called!")
     )
 
     let domainUser = DomainUser(
@@ -190,7 +191,46 @@ final class Publisher_ModelConvertibleTests: XCTestCase {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
+        }
+      )
+      .store(in: &subscriptions)
+
+    XCTAssertTrue(errorReceived)
+  }
+
+  func test_publisher_external_model_converting_error() {
+    let failingConverter = ModelConverter<DomainUser, ExternalUser>(
+      externalModelConverter: unimplemented("Should not be called!"),
+      domainModelConverter: { _ in nil }
+    )
+
+    let externalUser = ExternalUser(
+      name: "external-John",
+      surname: "external-Doe",
+      address: "external-random-address"
+    )
+
+    var errorReceived = false
+
+    let converted = Just(externalUser)
+      .setFailureType(to: TestError.self)
+      .convertToDomainModel(using: failingConverter)
+
+    converted
+      .sink(
+        receiveCompletion: { completion in
+          switch completion {
+          case .finished:
+            XCTFail("Unexpected event - finished.")
+          case let .failure(error) where error.cause == .modelConvertibleError && error.underlyingError == nil:
+            errorReceived = true
+          case let .failure(error):
+            XCTFail("Unexpected event - error \(error).")
+          }
+        },
+        receiveValue: { body in
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)

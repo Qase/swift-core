@@ -123,7 +123,7 @@ final class Request_networkClientTests: XCTestCase {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -159,7 +159,7 @@ final class Request_networkClientTests: XCTestCase {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -198,7 +198,7 @@ final class Request_networkClientTests: XCTestCase {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
