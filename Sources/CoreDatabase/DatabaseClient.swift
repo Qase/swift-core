@@ -1,7 +1,7 @@
 import Combine
 import CoreData
 import CombineExtensions
-import CoreToolkit
+import Utils
 
 // MARK: - DatabaseClientType live implementation
 

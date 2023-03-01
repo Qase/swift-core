@@ -1,6 +1,6 @@
-import CoreToolkit
 import KeyValueStorage
 import Networking
+import Utils
 import XCTest
 
 class KeyValueStorageType_TokenPersistenceTests: XCTestCase {

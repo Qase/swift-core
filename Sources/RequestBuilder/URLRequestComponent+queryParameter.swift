@@ -1,5 +1,5 @@
-import CoreToolkit
 import Foundation
+import Utils
 
 private extension URLRequestComponent {
   static func queryParameter(name: String, value: LosslessStringConvertible) -> Self {

@@ -19,8 +19,8 @@ let package = Package(
       targets: ["CoreDatabase"]
     ),
     .library(
-      name: "CoreToolkit",
-      targets: ["CoreToolkit"]
+      name: "Utils",
+      targets: ["Utils"]
     ),
     .library(
       name: "ErrorReporting",
@@ -69,7 +69,7 @@ let package = Package(
       name: "CoreDatabase",
       dependencies: [
         "CombineExtensions",
-        "CoreToolkit",
+        "Utils",
         "ErrorReporting"
       ]
     ),
@@ -80,14 +80,14 @@ let package = Package(
       ]
     ),
     .target(
-      name: "CoreToolkit",
+      name: "Utils",
       dependencies: [
       ]
     ),
     .testTarget(
-      name: "CoreToolkitTests",
+      name: "UtilsTests",
       dependencies: [
-        "CoreToolkit"
+        "Utils"
       ]
     ),
     .target(
@@ -156,7 +156,7 @@ let package = Package(
     .target(
       name: "RequestBuilder",
       dependencies: [
-        "CoreToolkit",
+        "Utils",
         "ErrorReporting",
       ]
     ),
