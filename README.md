@@ -7,7 +7,7 @@ Such libraries are designed to simplify iOS development by providing generally r
 
 Provides additional operators and functions for the Apple's [Combine framework](https://developer.apple.com/documentation/combine).  
 
-### CoreToolkit
+### Utils
 
 Provides generally useful extensions, functions and types.
 

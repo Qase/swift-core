@@ -1,7 +1,7 @@
 import Combine
-import CoreToolkit
 import Foundation
 import KeyValueStorage
+import Utils
 
 public extension KeyValueStorageType {
   func store<Token: TokenRepresenting>(

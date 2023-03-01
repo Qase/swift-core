@@ -1,8 +1,8 @@
 import Combine
 import CombineSchedulers
-import CoreToolkit
 import KeyValueStorage
 @testable import Networking
+import Utils
 import XCTest
 
 class TokenClientLiveTests: XCTestCase {

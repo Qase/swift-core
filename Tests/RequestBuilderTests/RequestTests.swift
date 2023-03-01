@@ -1,5 +1,5 @@
-import CoreToolkit
 @testable import RequestBuilder
+import Utils
 import XCTest
 
 class RequestTests: XCTestCase {
