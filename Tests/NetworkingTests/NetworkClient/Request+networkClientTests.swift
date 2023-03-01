@@ -32,7 +32,6 @@ private extension HTTPURLResponse {
 extension NetworkClientTests {
   func test_URLRequest_build_failure() {
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .mock(),
       networkMonitorClient: .mock(),
       logUUID: UUID.init,
@@ -58,7 +57,7 @@ extension NetworkClientTests {
           }
         },
         receiveValue: { body in
-          XCTFail("Unexpect event - element: \(body).")
+          XCTFail("Unexpected event - element: \(body).")
         }
       )
       .store(in: &subscriptions)
@@ -68,7 +67,6 @@ extension NetworkClientTests {
 
   func test_unauthorized_request() {
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (Data(), HTTPURLResponse.mock), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,

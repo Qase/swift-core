@@ -1,10 +1,15 @@
 import Foundation
 
 public extension URLRequester {
-  static let live: Self = .init { urlSessionConfiguration in { urlRequest in
-      URLSession(configuration: urlSessionConfiguration)
-        .dataTaskPublisher(for: urlRequest)
-        .eraseToAnyPublisher()
-    }
+  static func live(urlSessionConfiguration: URLSessionConfiguration) -> URLRequester {
+    let urlSession = URLSession(configuration: urlSessionConfiguration)
+
+    return .init(
+      request: { urlRequest in
+        urlSession
+          .dataTaskPublisher(for: urlRequest)
+          .eraseToAnyPublisher()
+      }
+    )
   }
 }

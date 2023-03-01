@@ -36,7 +36,6 @@ extension NetworkClientTests {
     var transformRequestCalled = false
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (.userMock, HTTPURLResponse.mock), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -81,7 +80,6 @@ extension NetworkClientTests {
     var transformRequestCalled = false
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (.userMock, HTTPURLResponse.mock), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -126,7 +124,6 @@ extension NetworkClientTests {
     var transformRequestCalled = false
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (.userMock, HTTPURLResponse.mock), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: UUID.init,
@@ -178,7 +175,6 @@ extension NetworkClientTests {
     }
 
     networkClient = NetworkClient(
-      urlSessionConfiguration: .default,
       urlRequester: .successMock(withResponse: (.userMock, HTTPURLResponse.mock), delayedFor: 1, scheduler: testScheduler),
       networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
       logUUID: uuid,

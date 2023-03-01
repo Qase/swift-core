@@ -38,7 +38,6 @@ extension AuthorizedNetworkClientTypeTests {
 
     authorizedNetworkClient = AuthorizedNetworkClient<TestToken>(
       networkClient: NetworkClient(
-        urlSessionConfiguration: .default,
         urlRequester: .successMock(withResponse: (.userMock, HTTPURLResponse.mock), delayedFor: 1, scheduler: testScheduler),
         networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
         logUUID: UUID.init,
@@ -102,7 +101,6 @@ extension AuthorizedNetworkClientTypeTests {
 
     authorizedNetworkClient = AuthorizedNetworkClient<TestToken>(
       networkClient: NetworkClient(
-        urlSessionConfiguration: .default,
         urlRequester: .successMock(withResponse: (.userMock, HTTPURLResponse.mock), delayedFor: 1, scheduler: testScheduler),
         networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
         logUUID: UUID.init,
@@ -166,7 +164,6 @@ extension AuthorizedNetworkClientTypeTests {
 
     authorizedNetworkClient = AuthorizedNetworkClient<TestToken>(
       networkClient: NetworkClient(
-        urlSessionConfiguration: .default,
         urlRequester: .successMock(withResponse: (.userMock, HTTPURLResponse.mock), delayedFor: 1, scheduler: testScheduler),
         networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
         logUUID: UUID.init,
@@ -245,18 +242,16 @@ extension AuthorizedNetworkClientTypeTests {
 
     authorizedNetworkClient = AuthorizedNetworkClient<TestToken>(
       networkClient: NetworkClient(
-        urlSessionConfiguration: .default,
-        urlRequester: .init { _ in { _ in
-            let response = networkRequestCount == 0
-            ? (Data(), unauthorizedHTTPResponse)
-            : (.userMock, successHTTPResponse)
+        urlRequester: .init { _ in
+          let response = networkRequestCount == 0
+          ? (Data(), unauthorizedHTTPResponse)
+          : (.userMock, successHTTPResponse)
 
-            return Just(response)
-              .setFailureType(to: URLError.self)
-              .handleEvents(receiveSubscription: { _ in networkRequestCount += 1 })
-              .delay(for: 1, scheduler: self.testScheduler)
-              .eraseToAnyPublisher()
-          }
+          return Just(response)
+            .setFailureType(to: URLError.self)
+            .handleEvents(receiveSubscription: { _ in networkRequestCount += 1 })
+            .delay(for: 1, scheduler: self.testScheduler)
+            .eraseToAnyPublisher()
         },
         networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
         logUUID: UUID.init,
@@ -338,16 +333,14 @@ extension AuthorizedNetworkClientTypeTests {
 
     authorizedNetworkClient = AuthorizedNetworkClient<TestToken>(
       networkClient: NetworkClient(
-        urlSessionConfiguration: .default,
-        urlRequester: .init { _ in { _ in
-            return Just((.userMock, successHTTPResponse))
-              .setFailureType(to: URLError.self)
-              .handleEvents(receiveSubscription: { _ in
-                networkRequestCount += 1
-              })
-              .delay(for: 1, scheduler: self.testScheduler)
-              .eraseToAnyPublisher()
-          }
+        urlRequester: .init { _ in
+          return Just((.userMock, successHTTPResponse))
+            .setFailureType(to: URLError.self)
+            .handleEvents(receiveSubscription: { _ in
+              networkRequestCount += 1
+            })
+            .delay(for: 1, scheduler: self.testScheduler)
+            .eraseToAnyPublisher()
         },
         networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
         logUUID: UUID.init,
@@ -446,18 +439,16 @@ extension AuthorizedNetworkClientTypeTests {
 
     authorizedNetworkClient = AuthorizedNetworkClient<TestToken>(
       networkClient: NetworkClient(
-        urlSessionConfiguration: .default,
-        urlRequester: .init { _ in { _ in
-            let response = networkRequestCount == 0
-            ? (Data(), unauthorizedHTTPResponse)
-            : (.userMock, successHTTPResponse)
-
-            return Just(response)
-              .setFailureType(to: URLError.self)
-              .handleEvents(receiveSubscription: { _ in networkRequestCount += 1 })
-              .delay(for: 1, scheduler: self.testScheduler)
-              .eraseToAnyPublisher()
-          }
+        urlRequester: .init { _ in
+          let response = networkRequestCount == 0
+          ? (Data(), unauthorizedHTTPResponse)
+          : (.userMock, successHTTPResponse)
+          
+          return Just(response)
+            .setFailureType(to: URLError.self)
+            .handleEvents(receiveSubscription: { _ in networkRequestCount += 1 })
+            .delay(for: 1, scheduler: self.testScheduler)
+            .eraseToAnyPublisher()
         },
         networkMonitorClient: .mockSequence(withValues: [.available], onScheduler: testScheduler, every: 1),
         logUUID: UUID.init,
