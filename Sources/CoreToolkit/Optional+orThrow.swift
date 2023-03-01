@@ -1,11 +1,9 @@
-public enum OptionalError: Error {
-    case nilValueFound
-}
+public struct OptionalValueIsNil: Error {}
 
 public extension Optional {
     func orThrow() throws -> Wrapped {
         guard let value = self else {
-            throw OptionalError.nilValueFound
+            throw OptionalValueIsNil()
         }
         return value
     }

@@ -10,7 +10,7 @@ class Optional_Tests: XCTestCase {
       _ = try optionalInt.orThrow()
       XCTFail("Received unexpected value")
     } catch {
-      XCTAssertEqual(error as? OptionalError, .nilValueFound)
+      XCTAssertTrue(error is OptionalValueIsNil)
     }
   }
   
