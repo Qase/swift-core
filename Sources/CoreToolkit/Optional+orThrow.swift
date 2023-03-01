@@ -1,4 +1,4 @@
-enum OptionalError: Error {
+public enum OptionalError: Error {
     case nilValueFound
 }
 
