@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct TokenPersistenceError: ErrorReporting {
+public struct TokenPersistenceError: CombineErrorReporting {
   public enum Cause: Error, CustomStringConvertible {
     case loadTokenError
     case storeTokenError
@@ -26,12 +26,12 @@ public struct TokenPersistenceError: ErrorReporting {
   public let cause: Cause
 
   public var stackID: UUID
-  public var underlyingError: ErrorReporting?
+  public var underlyingError: CombineErrorReporting?
 
   private init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: ErrorReporting? = nil
+    underlyingError: CombineErrorReporting? = nil
   ) {
     self.stackID = stackID
     self.cause = cause

@@ -13,8 +13,8 @@ extension Result where Success == URLRequest, Failure == URLRequestError {
 
   func execute<
     DataModel,
-    FetcherError: ErrorReporting,
-    ResultError: ErrorReporting & NetworkErrorCapable
+    FetcherError: CombineErrorReporting,
+    ResultError: CombineErrorReporting & NetworkErrorCapable
   >(
     fetcher: @escaping (URLRequest) -> AnyPublisher<DataModel, FetcherError>,
     mapNetworkError: ((FetcherError) -> ResultError)? = nil
@@ -71,7 +71,7 @@ extension Result where Success == URLRequest, Failure == URLRequestError {
 // MARK: - Syntax sugar methods working with custom Error
 
 public extension Result where Success == URLRequest, Failure == URLRequestError {
-  func execute<ResultError: ErrorReporting & NetworkErrorCapable>(
+  func execute<ResultError: CombineErrorReporting & NetworkErrorCapable>(
     using networkClient: NetworkClientType,
     mapNetworkError: ((NetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<(headers: [HTTPHeader], body: Data), ResultError> {
@@ -83,7 +83,7 @@ public extension Result where Success == URLRequest, Failure == URLRequestError 
 
   func execute<
     T: Decodable,
-    ResultError: ErrorReporting & NetworkErrorCapable
+    ResultError: CombineErrorReporting & NetworkErrorCapable
   >(
     using networkClient: NetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder(),
@@ -97,7 +97,7 @@ public extension Result where Success == URLRequest, Failure == URLRequestError 
 
   func execute<
     T: Decodable,
-    ResultError: ErrorReporting & NetworkErrorCapable
+    ResultError: CombineErrorReporting & NetworkErrorCapable
   >(
     using networkClient: NetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder(),
