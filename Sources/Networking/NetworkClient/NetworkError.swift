@@ -36,37 +36,10 @@ public struct NetworkError: CombineErrorReporting, URLRequestBuilderErrorCapable
         return "timeout"
       }
     }
-    
-    public var causeUIDescription: String {
-      switch self {
-      case .invalidResponse:
-        return "Invalid response"
-      case .urlError:
-        return "Internal error"
-      case .unauthorized:
-        return "Bad credentials"
-      case .clientError:
-        return "Client error"
-      case .serverError:
-        return "Server error"
-      case .noConnection:
-        return "No connection"
-      case .jsonDecodingError:
-        return "Internal error"
-      case .urlRequestBuilderError:
-        return "Internal error"
-      case .timeout:
-        return "Timeout"
-      }
-    }
   }
   
   public var causeDescription: String {
     cause.description
-  }
-  
-  public var causeUIdescription: String {
-    cause.causeUIDescription
   }
   
   public let cause: Cause

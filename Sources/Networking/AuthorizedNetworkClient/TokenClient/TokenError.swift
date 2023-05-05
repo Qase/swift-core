@@ -18,25 +18,10 @@ public struct TokenError: CombineErrorReporting, ErrorReporting {
           return "refreshError"
       }
     }
-    
-    public var UIdescription: String {
-      switch self {
-      case .localTokenError:
-          return "Token error"
-      case .tokenLocallyInvalid:
-          return "Invalid token"
-      case .refreshError:
-          return "Token expired"
-      }
-    }
   }
 
   public var causeDescription: String {
     cause.description
-  }
-  
-  public var causeUIdescription: String {
-    cause.UIdescription
   }
 
   public let cause: Cause

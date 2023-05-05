@@ -2,7 +2,7 @@ import ErrorReporting
 import Foundation
 
 public struct URLRequestError: CombineErrorReporting, ErrorReporting {
- 
+  
   public enum Cause: Error, CustomStringConvertible {
     case endpointParsingError
     case parameterParsingError
@@ -21,18 +21,10 @@ public struct URLRequestError: CombineErrorReporting, ErrorReporting {
         return "bodyEncodingError(error: \(error))"
       }
     }
-    
-    public var UIdescription: String {
-      return "Endpoint errror"
-    }
   }
   
   public var causeDescription: String {
     cause.description
-  }
-  
-  public var causeUIdescription: String {
-    cause.UIdescription
   }
   
   public let cause: Cause
