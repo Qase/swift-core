@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct DatabaseError: CombineErrorReporting {
+public struct DatabaseError: ErrorReporting {
   public enum Cause: Error, CustomDebugStringConvertible {//, Equatable {
     case fetchError(Error?)
     case nilWhenFetch
@@ -54,13 +54,13 @@ public struct DatabaseError: CombineErrorReporting {
   public let cause: Cause
 
   public var stackID: UUID
-  public var underlyingError: CombineErrorReporting?
+  public var underlyingError: ErrorReporting?
   public var requestID: String?
   
   init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: CombineErrorReporting? = nil,
+    underlyingError: ErrorReporting? = nil,
     requestID: String? = nil
   ) {
     self.stackID = stackID

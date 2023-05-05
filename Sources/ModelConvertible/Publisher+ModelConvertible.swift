@@ -40,7 +40,7 @@ public extension Publisher {
 // MARK: - ModelConvertible extensions with Error inferring
 
 public extension Publisher {
-  func convertToExternalModel<E: CombineErrorReporting & ModelConvertibleErrorCapable, C: ExternalModelConvertible>(
+  func convertToExternalModel<E: ErrorReporting & ModelConvertibleErrorCapable, C: ExternalModelConvertible>(
     using converter: C
   ) -> AnyPublisher<C.ExternalModel, E> where Self.Output == C.DomainModel, Self.Failure == E {
     flatMap { domainModel -> AnyPublisher<C.ExternalModel, E> in
@@ -55,7 +55,7 @@ public extension Publisher {
     .eraseToAnyPublisher()
   }
 
-  func convertToDomainModel<E: CombineErrorReporting & ModelConvertibleErrorCapable, C: DomainModelConvertible>(
+  func convertToDomainModel<E: ErrorReporting & ModelConvertibleErrorCapable, C: DomainModelConvertible>(
     using converter: C
   ) -> AnyPublisher<C.DomainModel, E> where Self.Output == C.ExternalModel, Self.Failure == E {
     flatMap { externalModel -> AnyPublisher<C.DomainModel, E> in

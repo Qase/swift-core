@@ -6,7 +6,7 @@ import ErrorReporting
 /// upstream: `Publisher<Output, Failure: ErrorReporting>`
 /// transform: `(Output) -> NewOutput`
 /// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
-public extension Publisher where Failure: CombineErrorReporting {
+public extension Publisher where Failure: ErrorReporting {
   func map<A: AnyObject, NewOutput>(
     weak obj: A,
     in file: String = #file,
@@ -38,7 +38,7 @@ public extension Publisher where Failure: CombineErrorReporting {
 /// transform: `(Output) -> NewOutput`
 /// downstream: `Publisher<NewOutput, Failure>`
 public extension Publisher where Failure == Never {
-  func map<A: AnyObject, NewOutput, NewFailure: CombineErrorReporting>(
+  func map<A: AnyObject, NewOutput, NewFailure: ErrorReporting>(
     weak obj: A,
     in file: String = #file,
     on line: Int = #line,

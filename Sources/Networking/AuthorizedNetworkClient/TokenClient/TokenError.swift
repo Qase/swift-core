@@ -1,8 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct TokenError: CombineErrorReporting, ErrorReporting {
-  
+public struct TokenError: ErrorReporting {
   public enum Cause: Error, CustomStringConvertible {
     case localTokenError
     case tokenLocallyInvalid
@@ -18,36 +17,21 @@ public struct TokenError: CombineErrorReporting, ErrorReporting {
           return "refreshError"
       }
     }
-    
-    public var UIdescription: String {
-      switch self {
-      case .localTokenError:
-          return "Token error"
-      case .tokenLocallyInvalid:
-          return "Invalid token"
-      case .refreshError:
-          return "Token expired"
-      }
-    }
   }
 
   public var causeDescription: String {
     cause.description
   }
-  
-  public var causeUIdescription: String {
-    cause.UIdescription
-  }
 
   public let cause: Cause
 
   public var stackID: UUID
-  public var underlyingError: CombineErrorReporting?
+  public var underlyingError: ErrorReporting?
 
   private init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: CombineErrorReporting? = nil
+    underlyingError: ErrorReporting? = nil
   ) {
     self.stackID = stackID
     self.cause = cause

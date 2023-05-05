@@ -1,8 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct NetworkError: CombineErrorReporting, URLRequestBuilderErrorCapable, ErrorReporting {
-  
+public struct NetworkError: ErrorReporting, URLRequestBuilderErrorCapable {
   public enum Cause: Error, CustomStringConvertible {
     case urlError(URLError)
     case invalidResponse
@@ -13,7 +12,7 @@ public struct NetworkError: CombineErrorReporting, URLRequestBuilderErrorCapable
     case jsonDecodingError(Error)
     case urlRequestBuilderError
     case timeout
-    
+
     public var description: String {
       switch self {
       case let .urlError(urlError):
@@ -36,49 +35,22 @@ public struct NetworkError: CombineErrorReporting, URLRequestBuilderErrorCapable
         return "timeout"
       }
     }
-    
-    public var causeUIDescription: String {
-      switch self {
-      case .invalidResponse:
-        return "Invalid response"
-      case .urlError:
-        return "Internal error"
-      case .unauthorized:
-        return "Bad credentials"
-      case .clientError:
-        return "Client error"
-      case .serverError:
-        return "Server error"
-      case .noConnection:
-        return "No connection"
-      case .jsonDecodingError:
-        return "Internal error"
-      case .urlRequestBuilderError:
-        return "Internal error"
-      case .timeout:
-        return "Timeout"
-      }
-    }
   }
-  
+
   public var causeDescription: String {
     cause.description
   }
-  
-  public var causeUIdescription: String {
-    cause.causeUIDescription
-  }
-  
+
   public let cause: Cause
-  
+
   public var stackID: UUID
-  public var underlyingError: CombineErrorReporting?
+  public var underlyingError: ErrorReporting?
   public var requestID: String?
-  
+
   init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: CombineErrorReporting? = nil,
+    underlyingError: ErrorReporting? = nil,
     requestID: String? = nil
   ) {
     self.stackID = stackID
@@ -102,7 +74,7 @@ public extension NetworkError {
   static func urlError(_ innerError: URLError) -> Self {
     NetworkError(cause: .urlError(innerError))
   }
-  
+
   static var invalidResponse: Self {
     NetworkError(cause: .invalidResponse)
   }
@@ -110,27 +82,27 @@ public extension NetworkError {
   static var unauthorized: Self {
     NetworkError(cause: .unauthorized)
   }
-  
+
   static func clientError(statusCode: Int) -> Self {
     NetworkError(cause: .clientError(statusCode: statusCode))
   }
-  
+
   static func serverError(statusCode: Int) -> Self {
     NetworkError(cause: .serverError(statusCode: statusCode))
   }
-  
+
   static var noConnection: Self {
     NetworkError(cause: .noConnection)
   }
-  
+
   static func jsonDecodingError(_ innerError: Error) -> Self {
     NetworkError(cause: .jsonDecodingError(innerError))
   }
-  
+
   static var urlRequestBuilderError: Self {
     NetworkError(cause: .urlRequestBuilderError)
   }
-  
+
   static var timeoutError: Self {
     NetworkError(cause: .timeout)
   }

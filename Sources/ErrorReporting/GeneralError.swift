@@ -1,6 +1,6 @@
 import Foundation
 
-public struct GeneralError: CombineErrorReporting {
+public struct GeneralError: ErrorReporting {
   public enum Cause: Error, CustomStringConvertible {
     case weakNil(file: String, line: Int)
     
@@ -18,12 +18,12 @@ public struct GeneralError: CombineErrorReporting {
   
   public let cause: Cause
   public var stackID: UUID
-  public var underlyingError: CombineErrorReporting?
+  public var underlyingError: ErrorReporting?
   
   private init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: CombineErrorReporting? = nil
+    underlyingError: ErrorReporting? = nil
   ) {
     self.stackID = stackID
     self.cause = cause

@@ -28,7 +28,7 @@ private extension Data {
   static var userMock = try! JSONEncoder().encode(User.mock)
 }
 
-private struct TestError: CombineErrorReporting, Equatable, NetworkErrorCapable {
+private struct TestError: ErrorReporting, Equatable, NetworkErrorCapable {
   enum Cause {
     case networkError
 
@@ -46,12 +46,12 @@ private struct TestError: CombineErrorReporting, Equatable, NetworkErrorCapable 
 
   public let cause: Cause
   public var stackID: UUID
-  public var underlyingError: CombineErrorReporting?
+  public var underlyingError: ErrorReporting?
 
   private init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: CombineErrorReporting? = nil
+    underlyingError: ErrorReporting? = nil
   ) {
     self.stackID = stackID
     self.cause = cause

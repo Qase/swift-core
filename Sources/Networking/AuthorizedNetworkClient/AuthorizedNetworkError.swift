@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct AuthorizedNetworkError: CombineErrorReporting {
+public struct AuthorizedNetworkError: ErrorReporting {
   public enum Cause: Error, CustomStringConvertible {
     case networkError
     case localTokenError
@@ -29,12 +29,12 @@ public struct AuthorizedNetworkError: CombineErrorReporting {
   public let cause: Cause
 
   public var stackID: UUID
-  public var underlyingError: CombineErrorReporting?
+  public var underlyingError: ErrorReporting?
 
   private init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: CombineErrorReporting? = nil
+    underlyingError: ErrorReporting? = nil
   ) {
     self.stackID = stackID
     self.cause = cause

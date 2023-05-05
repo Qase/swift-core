@@ -18,7 +18,7 @@ private struct DomainUser {
   let localAddress: String
 }
 
-private struct TestError: CombineErrorReporting, Equatable, ModelConvertibleErrorCapable {
+private struct TestError: ErrorReporting, Equatable, ModelConvertibleErrorCapable {
   enum Cause {
     case modelConvertibleError
 
@@ -36,12 +36,12 @@ private struct TestError: CombineErrorReporting, Equatable, ModelConvertibleErro
 
   public let cause: Cause
   public var stackID: UUID
-  public var underlyingError: CombineErrorReporting?
+  public var underlyingError: ErrorReporting?
 
   private init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: CombineErrorReporting? = nil
+    underlyingError: ErrorReporting? = nil
   ) {
     self.stackID = stackID
     self.cause = cause

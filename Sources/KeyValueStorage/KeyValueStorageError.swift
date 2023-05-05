@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct KeyValueStorageError: CombineErrorReporting {
+public struct KeyValueStorageError: ErrorReporting {
   public enum Cause: Error, CustomStringConvertible {
     /// Triggered when save error occurs.
     case storeFailed(Error?)
@@ -33,12 +33,12 @@ public struct KeyValueStorageError: CombineErrorReporting {
   public let cause: Cause
 
   public var stackID: UUID
-  public var underlyingError: CombineErrorReporting?
+  public var underlyingError: ErrorReporting?
 
   private init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: CombineErrorReporting? = nil
+    underlyingError: ErrorReporting? = nil
   ) {
     self.stackID = stackID
     self.cause = cause

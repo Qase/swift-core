@@ -33,7 +33,7 @@ public extension Request {
 // MARK: - Syntax sugar methods working with custom Error
 
 public extension Request {
-  func execute<ResultError: CombineErrorReporting & URLRequestBuilderErrorCapable & NetworkErrorCapable>(
+  func execute<ResultError: ErrorReporting & URLRequestBuilderErrorCapable & NetworkErrorCapable>(
     using networkClient: NetworkClientType,
     mapNetworkError: ((NetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<(headers: [HTTPHeader], body: Data), ResultError> {
@@ -43,7 +43,7 @@ public extension Request {
 
   func execute<
     T: Decodable,
-    ResultError: CombineErrorReporting & URLRequestBuilderErrorCapable & NetworkErrorCapable
+    ResultError: ErrorReporting & URLRequestBuilderErrorCapable & NetworkErrorCapable
   >(
     using networkClient: NetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder(),
@@ -55,7 +55,7 @@ public extension Request {
 
   func execute<
     T: Decodable,
-    ResultError: CombineErrorReporting & URLRequestBuilderErrorCapable & NetworkErrorCapable
+    ResultError: ErrorReporting & URLRequestBuilderErrorCapable & NetworkErrorCapable
   >(
     using networkClient: NetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder(),

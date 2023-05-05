@@ -44,7 +44,7 @@ public extension Result where Success == URLRequest, Failure == URLRequestError 
 // MARK: - Syntax sugar methods working with custom Error
 
 public extension Result where Success == URLRequest, Failure == URLRequestError {
-  func executeAuthorized<ResultError: CombineErrorReporting & NetworkErrorCapable>(
+  func executeAuthorized<ResultError: ErrorReporting & NetworkErrorCapable>(
     using authorizedNetworkClient: AuthorizedNetworkClientType,
     mapAuthorizedNetworkError: ((AuthorizedNetworkError) -> ResultError)? = nil
   ) -> AnyPublisher<(headers: [HTTPHeader], body: Data), ResultError> {
@@ -56,7 +56,7 @@ public extension Result where Success == URLRequest, Failure == URLRequestError 
 
   func executeAuthorized<
     T: Decodable,
-    ResultError: CombineErrorReporting & NetworkErrorCapable
+    ResultError: ErrorReporting & NetworkErrorCapable
   >(
     using authorizedNetworkClient: AuthorizedNetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder(),
@@ -70,7 +70,7 @@ public extension Result where Success == URLRequest, Failure == URLRequestError 
 
   func executeAuthorized<
     T: Decodable,
-    ResultError: CombineErrorReporting & NetworkErrorCapable
+    ResultError: ErrorReporting & NetworkErrorCapable
   >(
     using authorizedNetworkClient: AuthorizedNetworkClientType,
     jsonDecoder: JSONDecoder = JSONDecoder(),
