@@ -33,11 +33,11 @@ public struct GeneralError: CombineErrorReporting {
 
 // MARK: - GeneralError + Equatable
 
-extension GeneralError: Equatable {
-  public static func == (lhs: GeneralError, rhs: GeneralError) -> Bool {
-    lhs.isEqual(to: rhs)
-  }
-}
+//extension GeneralError: Equatable {
+//  public static func == (lhs: GeneralError, rhs: GeneralError) -> Bool {
+//    lhs.isEqual(to: rhs)
+//  }
+//}
 
 // MARK: - GeneralError + instances
 

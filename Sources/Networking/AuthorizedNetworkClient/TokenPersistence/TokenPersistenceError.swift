@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct TokenPersistenceError: CombineErrorReporting {
+public struct TokenPersistenceError: CombineErrorReporting, ErrorReporting {
   public enum Cause: Error, CustomStringConvertible {
     case loadTokenError
     case storeTokenError
@@ -36,14 +36,6 @@ public struct TokenPersistenceError: CombineErrorReporting {
     self.stackID = stackID
     self.cause = cause
     self.underlyingError = underlyingError
-  }
-}
-
-// MARK: - TokenPersistenceError + Equatable
-
-extension TokenPersistenceError: Equatable {
-  public static func == (lhs: TokenPersistenceError, rhs: TokenPersistenceError) -> Bool {
-    lhs.isEqual(to: rhs)
   }
 }
 

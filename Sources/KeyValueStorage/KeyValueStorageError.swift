@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct KeyValueStorageError: CombineErrorReporting {
+public struct KeyValueStorageError: CombineErrorReporting, ErrorReporting {
   public enum Cause: Error, CustomStringConvertible {
     /// Triggered when save error occurs.
     case storeFailed(Error?)
@@ -47,12 +47,12 @@ public struct KeyValueStorageError: CombineErrorReporting {
 }
 
 // MARK: - KeyValueStorageError + Equatable
-
-extension KeyValueStorageError: Equatable {
-  public static func == (lhs: KeyValueStorageError, rhs: KeyValueStorageError) -> Bool {
-    lhs.isEqual(to: rhs)
-  }
-}
+//
+//extension KeyValueStorageError: Equatable {
+//  public static func == (lhs: KeyValueStorageError, rhs: KeyValueStorageError) -> Bool {
+//    lhs.isEqual(to: rhs)
+//  }
+//}
 
 // MARK: - KeyValueStorageError + instances
 

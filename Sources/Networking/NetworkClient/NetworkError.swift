@@ -63,11 +63,11 @@ public struct NetworkError: CombineErrorReporting, URLRequestBuilderErrorCapable
 
 // MARK: - NetworkError + Equatable
 
-extension NetworkError: Equatable {
-  public static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
-    lhs.isEqual(to: rhs)
-  }
-}
+//extension NetworkError: Equatable {
+//  public static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
+//    lhs.isEqual(to: rhs)
+//  }
+//}
 
 // MARK: - NetworkError + instances
 

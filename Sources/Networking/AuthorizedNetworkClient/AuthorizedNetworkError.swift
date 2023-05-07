@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct AuthorizedNetworkError: CombineErrorReporting {
+public struct AuthorizedNetworkError: CombineErrorReporting, ErrorReporting {
   public enum Cause: Error, CustomStringConvertible {
     case networkError
     case localTokenError
@@ -39,14 +39,6 @@ public struct AuthorizedNetworkError: CombineErrorReporting {
     self.stackID = stackID
     self.cause = cause
     self.underlyingError = underlyingError
-  }
-}
-
-// MARK: - AuthorizedNetworkError + Equatable
-
-extension AuthorizedNetworkError: Equatable {
-  public static func == (lhs: AuthorizedNetworkError, rhs: AuthorizedNetworkError) -> Bool {
-    lhs.isEqual(to: rhs)
   }
 }
 
