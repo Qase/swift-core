@@ -3,9 +3,9 @@ import ErrorReporting
 
 // MARK: - ErrorHandling map extensions
 
-/// upstream: `Publisher<Output, Failure: ErrorReporting>`
+/// upstream: `Publisher<Output, Failure: CombineErrorReporting>`
 /// transform: `(Output) -> NewOutput`
-/// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
+/// downstream: `Publisher<NewOutput, Failure: CombineErrorReporting>`
 public extension Publisher where Failure: CombineErrorReporting {
   func map<A: AnyObject, NewOutput>(
     weak obj: A,

@@ -7,7 +7,7 @@ public protocol CombineErrorReporting: Error, CustomStringConvertible, CustomDeb
   var underlyingError: CombineErrorReporting? { get set }
 }
 
-// MARK: - ErrorReporting + ErrorComparing
+// MARK: - CombineErrorReporting + ErrorComparing
 
 public extension CombineErrorReporting {
   // NOTE: This value is used to compare errors. Equatable conformance is required by TCA architecture and for testing purposes.
@@ -21,7 +21,7 @@ public extension CombineErrorReporting {
   }
 }
 
-//MARK: - ErrorReporting + Equatable
+//MARK: - CombineErrorReporting + Equatable
 
 public extension CombineErrorReporting where Self: Equatable {
   func isEqual(to error: CombineErrorReporting) -> Bool {
@@ -30,7 +30,7 @@ public extension CombineErrorReporting where Self: Equatable {
 }
 
 
-// MARK: - ErrorReporting + StringConvertible
+// MARK: - CombineErrorReporting + StringConvertible
 
 public extension CombineErrorReporting {
   var description: String {
@@ -112,7 +112,7 @@ public extension Result where Failure: CombineErrorReporting {
   }
 }
 
-// MARK: - ErrorReporting + first
+// MARK: - CombineErrorReporting + first
 
 public extension CombineErrorReporting {
   /// Returns the first error in the underlying stack of errors (including self)

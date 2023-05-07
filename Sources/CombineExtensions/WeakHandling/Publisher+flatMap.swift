@@ -28,9 +28,9 @@ public extension Publisher where Failure: CombineErrorReporting {
 
 // MARK: - ErrorHandling flatMap extensions
 
-/// upstream: `Publisher<Output, Failure: ErrorReporting>`
-/// transfer: `(Output) -> Publisher<NewOutput, Failure: ErrorReporting`
-/// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
+/// upstream: `Publisher<Output, Failure: CombineErrorReporting>`
+/// transfer: `(Output) -> Publisher<NewOutput, Failure: CombineErrorReporting`
+/// downstream: `Publisher<NewOutput, Failure: CombineErrorReporting>`
 public extension Publisher where Failure: CombineErrorReporting {
   func flatMap<A: AnyObject, P: Publisher>(
     weak obj: A,
@@ -59,8 +59,8 @@ public extension Publisher where Failure: CombineErrorReporting {
 }
 
 /// upstream: `Publisher<Output, Never>`
-/// transform" `(Output) -> Publisher<NewOutput, Failure: ErrorReporting>`
-/// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
+/// transform" `(Output) -> Publisher<NewOutput, Failure: CombineErrorReporting>`
+/// downstream: `Publisher<NewOutput, Failure: CombineErrorReporting>`
 public extension Publisher where Failure == Never {
   func flatMap<A: AnyObject, P: Publisher>(
     weak obj: A,
@@ -88,9 +88,9 @@ public extension Publisher where Failure == Never {
   }
 }
 
-/// upstream: `Publisher<Output, Failure: ErrorReporting>`
+/// upstream: `Publisher<Output, Failure: CombineErrorReporting>`
 /// transfer: `(Output) -> Publisher<NewOutput, Failure: Never>`
-/// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
+/// downstream: `Publisher<NewOutput, Failure: CombineErrorReporting>`
 public extension Publisher where Failure: CombineErrorReporting {
   func flatMap<A: AnyObject, P: Publisher>(
     weak obj: A,
