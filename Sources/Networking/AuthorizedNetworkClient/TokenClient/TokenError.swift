@@ -42,11 +42,11 @@ public struct TokenError: CombineErrorReporting, ErrorReporting {
 
 // MARK: - TokenError + Equatable
 
-//extension TokenError: Equatable {
-//  public static func == (lhs: TokenError, rhs: TokenError) -> Bool {
-//    lhs.isEqual(to: rhs)
-//  }
-//}
+extension TokenError: Equatable {
+  public static func == (lhs: TokenError, rhs: TokenError) -> Bool {
+    lhs.isEqual(to: rhs)
+  }
+}
 
 // MARK: - TokenError + instances
 

@@ -45,11 +45,11 @@ public struct URLRequestError: CombineErrorReporting, ErrorReporting {
 
 // MARK: - URLRequestError + Equatable
 
-//extension URLRequestError: Equatable {
-//  public static func == (lhs: URLRequestError, rhs: URLRequestError) -> Bool {
-//    lhs.isEqual(to: rhs)
-//  }
-//}
+extension URLRequestError: Equatable {
+  public static func == (lhs: URLRequestError, rhs: URLRequestError) -> Bool {
+    lhs.isEqual(to: rhs)
+  }
+}
 
 // MARK: - URLRequestError + instances
 

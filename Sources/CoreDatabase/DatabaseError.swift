@@ -1,7 +1,7 @@
 import ErrorReporting
 import Foundation
 
-public struct DatabaseError: CombineErrorReporting {
+public struct DatabaseError: CombineErrorReporting, ErrorReporting {
   public enum Cause: Error, CustomDebugStringConvertible {//, Equatable {
     case fetchError(Error?)
     case nilWhenFetch

@@ -42,6 +42,14 @@ public struct AuthorizedNetworkError: CombineErrorReporting, ErrorReporting {
   }
 }
 
+// MARK: - AuthorizedNetworkError + Equatable
+
+extension AuthorizedNetworkError: Equatable {
+  public static func == (lhs: AuthorizedNetworkError, rhs: AuthorizedNetworkError) -> Bool {
+    lhs.isEqual(to: rhs)
+  }
+}
+
 // MARK: - AuthorizedNetworkError + instances
 
 public extension AuthorizedNetworkError {

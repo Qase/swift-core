@@ -47,12 +47,12 @@ public struct KeyValueStorageError: CombineErrorReporting, ErrorReporting {
 }
 
 // MARK: - KeyValueStorageError + Equatable
-//
-//extension KeyValueStorageError: Equatable {
-//  public static func == (lhs: KeyValueStorageError, rhs: KeyValueStorageError) -> Bool {
-//    lhs.isEqual(to: rhs)
-//  }
-//}
+
+extension KeyValueStorageError: Equatable {
+  public static func == (lhs: KeyValueStorageError, rhs: KeyValueStorageError) -> Bool {
+    lhs.isEqual(to: rhs)
+  }
+}
 
 // MARK: - KeyValueStorageError + instances
 

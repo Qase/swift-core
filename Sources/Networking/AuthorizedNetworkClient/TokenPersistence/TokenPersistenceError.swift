@@ -39,6 +39,14 @@ public struct TokenPersistenceError: CombineErrorReporting, ErrorReporting {
   }
 }
 
+// MARK: - TokenPersistenceError + Equatable
+
+extension TokenPersistenceError: Equatable {
+  public static func == (lhs: TokenPersistenceError, rhs: TokenPersistenceError) -> Bool {
+    lhs.isEqual(to: rhs)
+  }
+}
+
 // MARK: - TokenPersistenceError + instances
 
 extension TokenPersistenceError {
