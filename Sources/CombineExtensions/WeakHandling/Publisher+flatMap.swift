@@ -6,7 +6,7 @@ import ErrorReporting
 /// upstream: `Publisher<Output, Failure>`
 /// transform: `(Output) -> Publisher<NewOutput, Failure>`
 /// downstream: `Publisher<NewOutput, Failure>`
-public extension Publisher where Failure: ErrorReporting {
+public extension Publisher where Failure: CombineErrorReporting {
   func flatMap<A: AnyObject, P: Publisher>(
     weak obj: A,
     in file: String = #file,
@@ -28,10 +28,10 @@ public extension Publisher where Failure: ErrorReporting {
 
 // MARK: - ErrorHandling flatMap extensions
 
-/// upstream: `Publisher<Output, Failure: ErrorReporting>`
-/// transfer: `(Output) -> Publisher<NewOutput, Failure: ErrorReporting`
-/// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
-public extension Publisher where Failure: ErrorReporting {
+/// upstream: `Publisher<Output, Failure: CombineErrorReporting>`
+/// transfer: `(Output) -> Publisher<NewOutput, Failure: CombineErrorReporting`
+/// downstream: `Publisher<NewOutput, Failure: CombineErrorReporting>`
+public extension Publisher where Failure: CombineErrorReporting {
   func flatMap<A: AnyObject, P: Publisher>(
     weak obj: A,
     in file: String = #file,
@@ -59,8 +59,8 @@ public extension Publisher where Failure: ErrorReporting {
 }
 
 /// upstream: `Publisher<Output, Never>`
-/// transform" `(Output) -> Publisher<NewOutput, Failure: ErrorReporting>`
-/// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
+/// transform" `(Output) -> Publisher<NewOutput, Failure: CombineErrorReporting>`
+/// downstream: `Publisher<NewOutput, Failure: CombineErrorReporting>`
 public extension Publisher where Failure == Never {
   func flatMap<A: AnyObject, P: Publisher>(
     weak obj: A,
@@ -69,7 +69,7 @@ public extension Publisher where Failure == Never {
     logger log: @escaping (String) -> Void = { Swift.print($0) },
     onWeakNil error: P.Failure,
     _ transform: @escaping (A, Self.Output) -> P
-  ) -> AnyPublisher<P.Output, P.Failure> where P.Failure: ErrorReporting {
+  ) -> AnyPublisher<P.Output, P.Failure> where P.Failure: CombineErrorReporting {
     flatMap { [weak obj] element -> AnyPublisher<P.Output, P.Failure> in
       guard let obj = obj else {
         log("Self is nil in file: \(file), on line: \(line)!")
@@ -88,10 +88,10 @@ public extension Publisher where Failure == Never {
   }
 }
 
-/// upstream: `Publisher<Output, Failure: ErrorReporting>`
+/// upstream: `Publisher<Output, Failure: CombineErrorReporting>`
 /// transfer: `(Output) -> Publisher<NewOutput, Failure: Never>`
-/// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
-public extension Publisher where Failure: ErrorReporting {
+/// downstream: `Publisher<NewOutput, Failure: CombineErrorReporting>`
+public extension Publisher where Failure: CombineErrorReporting {
   func flatMap<A: AnyObject, P: Publisher>(
     weak obj: A,
     in file: String = #file,

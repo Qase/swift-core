@@ -17,13 +17,19 @@ Provides a reactive layer over Apple's [CoreData framework](https://developer.ap
 
 ### ErrorReporting
 
-Provides the `ErrorReporting` protocol that custom errors can conform in order to improve error-handling solution within an application. 
+Provides the `ErrorReporting` and `CombineErrorReporting` protocols that custom errors can conform in order to improve error-handling solution within an application. 
 
-By conforming the `ErrorReporting` protocol, each error becomes a part of a linked list. If using a multi-layer application architecture, each error origins at some place and might be further modified while travelling through individual layers of the architecture. An error at each level may be traversed all the way to the error origin by using its `underlyingError` property.
+`ErrorReporting` is supposed to be used on concurrency structures and `CombineErrorReporting` is made for combine structures.
 
-Each linked list of errors represents a single error travelling from its origin all the way to where it is presented to a user. Such linked list of errors is identified by `stackID` property of the `ErrorReporting` protocol. 
+By conforming the `CombineErrorReporting` protocol, each error becomes a part of a linked list. If using a multi-layer application architecture, each error origins at some place and might be further modified while travelling through individual layers of the architecture. An error at each level may be traversed all the way to the error origin by using its `underlyingError` property.
 
-`ErrorReporting` additionaly requires each error to conform to `Equatable` protocol. 
+Each linked list of errors represents a single error travelling from its origin all the way to where it is presented to a user. Such linked list of errors is identified by `stackID` property of the `CombineErrorReporting` protocol. 
+
+`ErrorReporting` now does not use anything special due to concurrency own "propagating" of errors.
+
+`ErrorReporting` and `CombineErrorReporting` additionaly requires each error to conform to `Equatable` protocol. 
+
+
 
 ### KeyValueStorage
 

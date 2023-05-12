@@ -1,7 +1,8 @@
 import ErrorReporting
 import Foundation
 
-public struct NetworkError: ErrorReporting, URLRequestBuilderErrorCapable {
+public struct NetworkError: CombineErrorReporting, URLRequestBuilderErrorCapable, ErrorReporting {
+  
   public enum Cause: Error, CustomStringConvertible {
     case urlError(URLError)
     case invalidResponse
@@ -12,7 +13,7 @@ public struct NetworkError: ErrorReporting, URLRequestBuilderErrorCapable {
     case jsonDecodingError(Error)
     case urlRequestBuilderError
     case timeout
-
+    
     public var description: String {
       switch self {
       case let .urlError(urlError):
@@ -36,21 +37,21 @@ public struct NetworkError: ErrorReporting, URLRequestBuilderErrorCapable {
       }
     }
   }
-
+  
   public var causeDescription: String {
     cause.description
   }
-
+  
   public let cause: Cause
-
+  
   public var stackID: UUID
-  public var underlyingError: ErrorReporting?
+  public var underlyingError: CombineErrorReporting?
   public var requestID: String?
-
+  
   init(
     stackID: UUID = UUID(),
     cause: Cause,
-    underlyingError: ErrorReporting? = nil,
+    underlyingError: CombineErrorReporting? = nil,
     requestID: String? = nil
   ) {
     self.stackID = stackID
@@ -74,7 +75,7 @@ public extension NetworkError {
   static func urlError(_ innerError: URLError) -> Self {
     NetworkError(cause: .urlError(innerError))
   }
-
+  
   static var invalidResponse: Self {
     NetworkError(cause: .invalidResponse)
   }
@@ -82,27 +83,27 @@ public extension NetworkError {
   static var unauthorized: Self {
     NetworkError(cause: .unauthorized)
   }
-
+  
   static func clientError(statusCode: Int) -> Self {
     NetworkError(cause: .clientError(statusCode: statusCode))
   }
-
+  
   static func serverError(statusCode: Int) -> Self {
     NetworkError(cause: .serverError(statusCode: statusCode))
   }
-
+  
   static var noConnection: Self {
     NetworkError(cause: .noConnection)
   }
-
+  
   static func jsonDecodingError(_ innerError: Error) -> Self {
     NetworkError(cause: .jsonDecodingError(innerError))
   }
-
+  
   static var urlRequestBuilderError: Self {
     NetworkError(cause: .urlRequestBuilderError)
   }
-
+  
   static var timeoutError: Self {
     NetworkError(cause: .timeout)
   }

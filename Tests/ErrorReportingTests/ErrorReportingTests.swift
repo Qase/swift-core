@@ -3,13 +3,13 @@ import ErrorReporting
 import XCTest
 
 final class ErrorReportingTests: XCTestCase {
-  struct TestError1: ErrorReporting, Equatable {
+  struct TestError1: CombineErrorReporting, Equatable {
     var stackID: UUID
-    var underlyingError: ErrorReporting?
+    var underlyingError: CombineErrorReporting?
 
     public var causeDescription: String { "" }
 
-    init(stackID: UUID = UUID(), underlyingError: ErrorReporting? = nil) {
+    init(stackID: UUID = UUID(), underlyingError: CombineErrorReporting? = nil) {
       self.stackID = stackID
       self.underlyingError = underlyingError
     }
@@ -19,7 +19,7 @@ final class ErrorReportingTests: XCTestCase {
     }
   }
 
-  struct TestError2: ErrorReporting {
+  struct TestError2: CombineErrorReporting {
     enum Cause: String, CustomStringConvertible {
       case errorCause1
       case errorCause2
@@ -29,7 +29,7 @@ final class ErrorReportingTests: XCTestCase {
 
     let cause: Cause
     var stackID: UUID
-    var underlyingError: ErrorReporting?
+    var underlyingError: CombineErrorReporting?
 
     var causeDescription: String { cause.description }
 

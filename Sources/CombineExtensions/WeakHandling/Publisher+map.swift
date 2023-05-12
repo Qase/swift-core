@@ -3,10 +3,10 @@ import ErrorReporting
 
 // MARK: - ErrorHandling map extensions
 
-/// upstream: `Publisher<Output, Failure: ErrorReporting>`
+/// upstream: `Publisher<Output, Failure: CombineErrorReporting>`
 /// transform: `(Output) -> NewOutput`
-/// downstream: `Publisher<NewOutput, Failure: ErrorReporting>`
-public extension Publisher where Failure: ErrorReporting {
+/// downstream: `Publisher<NewOutput, Failure: CombineErrorReporting>`
+public extension Publisher where Failure: CombineErrorReporting {
   func map<A: AnyObject, NewOutput>(
     weak obj: A,
     in file: String = #file,
@@ -38,7 +38,7 @@ public extension Publisher where Failure: ErrorReporting {
 /// transform: `(Output) -> NewOutput`
 /// downstream: `Publisher<NewOutput, Failure>`
 public extension Publisher where Failure == Never {
-  func map<A: AnyObject, NewOutput, NewFailure: ErrorReporting>(
+  func map<A: AnyObject, NewOutput, NewFailure: CombineErrorReporting>(
     weak obj: A,
     in file: String = #file,
     on line: Int = #line,
