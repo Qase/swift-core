@@ -1,5 +1,6 @@
 #if DEBUG
 import Combine
+import CombineExtensions
 import Foundation
 
 public enum NetworkPath {
